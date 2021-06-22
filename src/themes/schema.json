@@ -5,15 +5,17 @@
       "colors": {
         "primary": "white",
         "primaryHover": "#cfcfcf",
+        "dropShadow": "rgba(0,0,0,0.3)",
         "secondary": "black",
-        "secondaryHover": "#383838"
+        "secondaryHover": "#575757"
       }
     },
     "dark": {
       "name": "Dark",
       "colors": {
         "primary": "black",
-        "primaryHover": "#383838",
+        "primaryHover": "#575757",
+        "dropShadow": "rgba(0,0,0,0.3)",
         "secondary": "white",
         "secondaryHover": "#cfcfcf"
       }

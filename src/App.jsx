@@ -3,19 +3,18 @@ import { ThemeProvider } from "styled-components";
 import { GlobalStyles } from "./themes/globalStyles";
 import themes from "./themes/schema.json";
 import { JCUXButton } from "./Components/JCUX/JCUXButton";
+import { Route } from "react-router-dom";
 import "semantic-ui-css/semantic.min.css";
+import Navbar from "./Components/Navbar";
 
 const App = () => {
-  const [selectedTheme, setSelectedTheme] = useState(themes.data.dark);
+  const [selectedTheme, setSelectedTheme] = useState(themes.data.light);
   return (
     <ThemeProvider theme={selectedTheme}>
       <GlobalStyles />
-      <JCUXButton onClick={() => setSelectedTheme(themes.data.light)}>
-        Light
-      </JCUXButton>
-      <JCUXButton onClick={() => setSelectedTheme(themes.data.dark)}>
-        Dark
-      </JCUXButton>
+      <Navbar />
+      <Route exact path="/" />
+      <Route />
     </ThemeProvider>
   );
 };
