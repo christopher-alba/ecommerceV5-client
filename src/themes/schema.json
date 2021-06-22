@@ -15,7 +15,7 @@
       "colors": {
         "primary": "black",
         "primaryHover": "#575757",
-        "dropShadow": "rgba(255,255,255,0.3)",
+        "dropShadow": "rgba(0,0,0,0.3)",
         "secondary": "white",
         "secondaryHover": "#cfcfcf"
       }

@@ -5,6 +5,7 @@ import themes from "./themes/schema.json";
 import { Route } from "react-router-dom";
 import "semantic-ui-css/semantic.min.css";
 import Navbar from "./Components/Navbar";
+import Home from "./Pages/Home";
 
 const App = () => {
   const [selectedTheme, setSelectedTheme] = useState(themes.data.light);
@@ -16,7 +17,7 @@ const App = () => {
         themes={themes}
         selectedTheme={selectedTheme}
       />
-      <Route exact path="/" />
+      <Route exact path="/" component={Home} />
       <Route />
     </ThemeProvider>
   );
