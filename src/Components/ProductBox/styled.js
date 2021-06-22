@@ -18,7 +18,8 @@ export const ProductBoxOuter = styled(Link)`
 
 export const ProductImage = styled("img")`
   height: 300px;
-  width: auto;
+  width: 300px;
+  object-fit: cover;
 `;
 
 export const ImageWrapper = styled("div")`
