@@ -7,6 +7,8 @@ export const NavbarBoxOuter = styled("div")`
   color: ${({ theme }) => theme.colors.secondary};
   padding-top: 20px;
   padding-bottom: 20px;
+  position: sticky;
+  top:0px;
 `;
 
 export const NavbarLinks = styled(Link)`
@@ -86,7 +88,7 @@ export const NavbarThemeBox = styled("div")`
   @media (max-width: 1200px) {
     width: 100%;
     margin-right: 0px !important;
-    position:relative;
+    position: relative;
     left: -10px;
   }
 `;

@@ -5,11 +5,13 @@ const TitleWrapperOuter = styled("div")`
   display: flex;
   justify-content: center;
   align-items: center;
+  margin-bottom: 50px;
 `;
 const TitleWrapperInner = styled("div")`
   width: 50%;
   border-bottom: 2px solid ${({ theme }) => theme.colors.secondary};
   text-align: center;
+  transition: 300ms;
 `;
 const TitleHeader = styled("h1")`
   font-weight: 200;
