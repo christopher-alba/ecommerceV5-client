@@ -10,7 +10,7 @@ for (let i = 0; i < 100; i++) {
     description: "Description Number" + counter,
     images: [
       {
-        url: `https://picsum.photos/200/300?random=${counter}`,
+        url: `https://picsum.photos/1920/1080?random=${counter}`,
       },
     ],
     sizes: [
@@ -35,7 +35,7 @@ for (let i = 0; i < 10; i++) {
     description: "Description Number" + counter,
     images: [
       {
-        url: `https://picsum.photos/200/300?random=${counter}`,
+        url: `https://picsum.photos/1920/1080?random=${counter}`,
       },
     ],
     sizes: [
