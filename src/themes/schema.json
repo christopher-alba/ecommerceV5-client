@@ -3,30 +3,15 @@
     "light": {
       "name": "Light",
       "colors": {
-        "body": "#FFFFFF",
-        "text": "#000000",
-        "button": {
-          "text": "#FFFFFF",
-          "background": "#000000"
-        },
-        "link": {
-          "text": "teal",
-          "opacity": 1
-        }
+        "primary": "white",
+        "secondary": "black"
       }
     },
     "dark": {
       "name": "Dark",
       "colors": {
-        "body": "black",
-        "text": "white",
-        "button": {
-          "text": "black",
-          "background": "white"
-        },
-        "link": {
-          "text": "white"
-        }
+        "primary": "black",
+        "secondary": "white"
       }
     }
   }
