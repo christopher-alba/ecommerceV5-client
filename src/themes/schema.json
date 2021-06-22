@@ -1,7 +1,7 @@
 {
   "data": {
     "light": {
-      "name": "Light",
+      "name": "light",
       "colors": {
         "primary": "white",
         "primaryHover": "#cfcfcf",
@@ -11,7 +11,7 @@
       }
     },
     "dark": {
-      "name": "Dark",
+      "name": "dark",
       "colors": {
         "primary": "black",
         "primaryHover": "#575757",

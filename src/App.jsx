@@ -11,7 +11,11 @@ const App = () => {
   return (
     <ThemeProvider theme={selectedTheme}>
       <GlobalStyles />
-      <Navbar setSelectedTheme={setSelectedTheme} themes={themes} />
+      <Navbar
+        setSelectedTheme={setSelectedTheme}
+        themes={themes}
+        selectedTheme={selectedTheme}
+      />
       <Route exact path="/" />
       <Route />
     </ThemeProvider>

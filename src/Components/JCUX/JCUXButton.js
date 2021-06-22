@@ -5,6 +5,7 @@ export const JCUXButton = styled(Button)`
   background: ${({ theme }) => theme.colors.primary} !important;
   color: ${({ theme }) => theme.colors.secondary} !important;
   box-shadow: 0px 2px 5px 1px ${({ theme }) => theme.colors.dropShadow} !important;
+  border: 2px solid ${({ theme }) => theme.colors.secondary} !important;
   &:hover,
   &:focus {
     background: ${({ theme }) => theme.colors.primaryHover} !important;
