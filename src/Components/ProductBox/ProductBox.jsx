@@ -1,15 +1,23 @@
 import React from "react";
-import { ProductBoxOuter, ProductImage, ImageWrapper } from "./styled";
+import {
+  ProductBoxOuter,
+  ProductImage,
+  ImageWrapper,
+  ProductText,
+  ProductTextWrapper,
+} from "./styled";
 
 const ProductBox = ({ product }) => {
-  const { name, price, images } = product;
+  const { name, price, images, id } = product;
   return (
-    <ProductBoxOuter>
+    <ProductBoxOuter to={`/products/${id}`}>
       <ImageWrapper>
         <ProductImage src={images[0].url} alt="" />
       </ImageWrapper>
-      <h4>{name}</h4>
-      <h4>NZ${price}</h4>
+      <ProductTextWrapper>
+        <ProductText>{name}</ProductText>
+        <ProductText>NZ${price}</ProductText>
+      </ProductTextWrapper>
     </ProductBoxOuter>
   );
 };

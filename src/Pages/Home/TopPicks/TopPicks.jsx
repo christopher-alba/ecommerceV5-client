@@ -1,5 +1,10 @@
 import React, { useEffect } from "react";
-import { TopPicksOuterBox, TopPicksProductsBox } from "./styled";
+import {
+  TopPicksOuterBox,
+  TopPicksProductsBox,
+  TopPicksBox,
+  ArrowBox,
+} from "./styled";
 import { JCUXContainer } from "../../../Components/JCUX/JCUXContainer";
 import { JCUXTitle } from "../../../Components/JCUX/JCUXTitle";
 import ProductBox from "../../../Components/ProductBox";
@@ -12,8 +17,10 @@ const TopPicks = () => {
     let startX, scrollLeft;
 
     let startDragging = function (e) {
+      if (!mouseDown) {
+        slider.style.cursor = "grabbing";
+      }
       mouseDown = true;
-      slider.style.cursor = "grabbing";
       startX = e.pageX - slider.offsetLeft;
       scrollLeft = slider.scrollLeft;
     };
@@ -37,15 +44,39 @@ const TopPicks = () => {
     slider.addEventListener("mouseup", stopDragging, false);
     slider.addEventListener("mouseleave", stopDragging, false);
   });
+  const onLeftArrowClick = () => {
+    const topPicks = document.getElementsByClassName(
+      "top-picks-main-wrapper"
+    )[0];
+    topPicks.style.scrollBehaviour = "smooth important!";
+    topPicks.scrollLeft = topPicks.scrollLeft - 500;
+    topPicks.style.scrollBehaviour = "auto important!";
+  };
+  const onRightArrowClick = () => {
+    const topPicks = document.getElementsByClassName(
+      "top-picks-main-wrapper"
+    )[0];
+    topPicks.style.scrollBehaviour = "smooth";
+    topPicks.scrollLeft = topPicks.scrollLeft + 500;
+    topPicks.style.scrollBehaviour = "auto";
+  };
   return (
     <TopPicksOuterBox>
       <JCUXContainer>
         <JCUXTitle>MOST VIEWED PRODUCTS</JCUXTitle>
-        <TopPicksProductsBox className="top-picks-main-wrapper">
-          {topPicks.map((product) => (
-            <ProductBox product={product} />
-          ))}
-        </TopPicksProductsBox>
+        <TopPicksBox>
+          <ArrowBox onClick={onLeftArrowClick}>
+            <i className="fas fa-chevron-left"></i>
+          </ArrowBox>
+          <TopPicksProductsBox className="top-picks-main-wrapper">
+            {topPicks.map((product) => (
+              <ProductBox product={product} />
+            ))}
+          </TopPicksProductsBox>
+          <ArrowBox onClick={onRightArrowClick}>
+            <i className="fas fa-chevron-right"></i>
+          </ArrowBox>
+        </TopPicksBox>
       </JCUXContainer>
     </TopPicksOuterBox>
   );

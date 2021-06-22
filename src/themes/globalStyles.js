@@ -10,4 +10,7 @@ export const GlobalStyles = createGlobalStyle`
     background: ${({ theme }) => theme.colors.secondary} !important;
     border-radius:50px !important;
   }
+  ::-webkit-scrollbar-thumb {
+    background: ${({ theme }) => theme.colors.primaryHover} !important;
+  }
 `;
