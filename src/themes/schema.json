@@ -1,7 +1,6 @@
 {
   "data": {
     "light": {
-      "id": "T_001",
       "name": "Light",
       "colors": {
         "body": "#FFFFFF",
@@ -16,19 +15,17 @@
         }
       }
     },
-    "seaWave": {
-      "id": "T_007",
-      "name": "Sea Wave",
+    "dark": {
+      "name": "Dark",
       "colors": {
-        "body": "#9be7ff",
-        "text": "#0d47a1",
+        "body": "black",
+        "text": "white",
         "button": {
-          "text": "#ffffff",
-          "background": "#0d47a1"
+          "text": "black",
+          "background": "white"
         },
         "link": {
-          "text": "#0d47a1",
-          "opacity": 0.8
+          "text": "white"
         }
       }
     }

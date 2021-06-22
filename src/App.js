@@ -14,13 +14,8 @@ const App = () => {
     <ThemeProvider theme={selectedTheme}>
       <GlobalStyles />
       <Container style={{ fontFamily: selectedTheme.font }}>
-        <h1>Theme Builder</h1>
-        <p>
-          This is a theming system with a Theme Switcher and Theme Builder.
-          Do you want to see the source code? <a href="https://github.com/atapas/theme-builder" target="_blank" rel="noreferrer">Click here.</a>
-        </p>
         <button onClick={() => setSelectedTheme(themes.data.light)}>Light</button>
-        <button onClick={() => setSelectedTheme(themes.data.seaWave)}>Sea Wave</button>
+        <button onClick={() => setSelectedTheme(themes.data.dark)}>Dark</button>
       </Container>
     </ThemeProvider>
   );
