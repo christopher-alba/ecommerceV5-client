@@ -1,5 +1,6 @@
 import { Link } from "react-router-dom";
 import styled from "styled-components";
+import { Radio, Icon } from "semantic-ui-react";
 
 export const NavbarBoxOuter = styled("div")`
   background: ${({ theme }) => theme.colors.primary};
@@ -36,10 +37,27 @@ export const NavbarBoxInner = styled("div")`
 `;
 
 export const NavbarRightBox = styled("div")`
+  display: flex;
+  align-items: center;
   * {
     margin-right: 20px !important;
     &:last-child {
       margin-right: 0px !important;
     }
   }
+`;
+
+export const NavbarRadio = styled(Radio)`
+  color: ${({ theme }) => theme.colors.secondary} !important;
+`;
+export const NavbarThemeIcon = styled(Icon)`
+  font-size: 2rem !important;
+  display:flex !important;
+  align-items: center;
+`;
+
+export const NavbarThemeBox = styled("div")`
+  display: flex;
+  align-items: center;
+  margin-right: 50px !important;
 `;
