@@ -2,18 +2,8 @@ import { createGlobalStyle } from "styled-components";
 
 export const GlobalStyles = createGlobalStyle`
   body {
-    background: ${({ theme }) => theme.colors.primary};
-    color: ${({ theme }) => theme.colors.secondary};
+    background: ${({ theme }) => theme.colors.primary} !important;
+    color: ${({ theme }) => theme.colors.secondary} !important;
     transition: all 0.50s linear;
-  }
-
-  a {
-    color: ${({ theme }) => theme.colors.secondary};
-    cursor: pointer;
-  }
-
-  button {
-    background: ${({ theme }) => theme.colors.secondary};
-    color: ${({ theme }) => theme.colors.primary};
   }
 `;
