@@ -4,14 +4,18 @@
       "name": "Light",
       "colors": {
         "primary": "white",
-        "secondary": "black"
+        "primaryHover": "#cfcfcf",
+        "secondary": "black",
+        "secondaryHover": "#383838"
       }
     },
     "dark": {
       "name": "Dark",
       "colors": {
         "primary": "black",
-        "secondary": "white"
+        "primaryHover": "#383838",
+        "secondary": "white",
+        "secondaryHover": "#cfcfcf"
       }
     }
   }

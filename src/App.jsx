@@ -1,18 +1,23 @@
-import React, { useState } from 'react';
+import React, { useState } from "react";
 import { ThemeProvider } from "styled-components";
-import { GlobalStyles } from './themes/globalStyles';
+import { GlobalStyles } from "./themes/globalStyles";
 import themes from "./themes/schema.json";
-import 'semantic-ui-css/semantic.min.css'
+import { JCUXButton } from "./Components/JCUX/JCUXButton";
+import "semantic-ui-css/semantic.min.css";
 
 const App = () => {
-  const [selectedTheme, setSelectedTheme] = useState(themes.data.dark)
+  const [selectedTheme, setSelectedTheme] = useState(themes.data.dark);
   return (
     <ThemeProvider theme={selectedTheme}>
       <GlobalStyles />
-      <button onClick={() => setSelectedTheme(themes.data.light)}>Light</button>
-      <button onClick={() => setSelectedTheme(themes.data.dark)}>Dark</button>
+      <JCUXButton onClick={() => setSelectedTheme(themes.data.light)}>
+        Light
+      </JCUXButton>
+      <JCUXButton onClick={() => setSelectedTheme(themes.data.dark)}>
+        Dark
+      </JCUXButton>
     </ThemeProvider>
   );
-}
+};
 
 export default App;
