@@ -10,6 +10,7 @@ import { JCUXTitle } from "../../../Components/JCUX/JCUXTitle";
 import ProductBox from "../../../Components/ProductBox";
 import { GET_TOP_PICKS } from "../../../ApolloClient/queries";
 import { useQuery } from "@apollo/client";
+import { Loader } from "semantic-ui-react";
 
 const TopPicks = () => {
   const { loading, error, data } = useQuery(GET_TOP_PICKS);
@@ -65,9 +66,15 @@ const TopPicks = () => {
     topPicks.scrollLeft = topPicks.scrollLeft + 500;
     topPicks.style.scrollBehaviour = "auto";
   };
+
   if (loading) {
-    return <div>loading...</div>;
+    return (
+      <div style={{ position: "relative", height: "400px" }}>
+        <Loader active={loading}>Fetching Top Picks</Loader>
+      </div>
+    );
   }
+
   if (error) {
     return <div>{error.message}</div>;
   }
