@@ -6,6 +6,7 @@ const TitleWrapperOuter = styled("div")`
   justify-content: center;
   align-items: center;
   margin-bottom: 100px;
+  margin-top: 100px;
 `;
 const TitleWrapperInner = styled("div")`
   width: 50%;
