@@ -9,6 +9,7 @@ export const NavbarBoxOuter = styled("div")`
   padding-bottom: 20px;
   position: sticky;
   top:0px;
+  z-index: 10000;
 `;
 
 export const NavbarLinks = styled(Link)`
