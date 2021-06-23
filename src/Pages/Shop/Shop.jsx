@@ -50,9 +50,11 @@ const Shop = ({
 }) => {
   const { loading, error, data } = useQuery(GET_PRODUCTS);
 
-  const [basicFilter, setBasicFilter] = useState("none");
-  const [typeFilter, setTypeFilter] = useState("none");
-  const [orientationFilter, setOrientationFilter] = useState("none");
+  const [basicFilter, setBasicFilter] = useState(basicFilterFinal);
+  const [typeFilter, setTypeFilter] = useState(typeFilterFinal);
+  const [orientationFilter, setOrientationFilter] = useState(
+    orientationFilterFinal
+  );
   const [searchStringLocal, setSearchString] = useState("");
   const [upperCount, setUpperCount] = useState(8);
   const [lowerCount, setLowerCount] = useState(0);
