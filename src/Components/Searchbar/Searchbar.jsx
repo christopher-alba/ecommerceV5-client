@@ -1,15 +1,34 @@
 import React from "react";
 import { SearchBoxInput, SearchBoxSubmit, SearchBox } from "./styled";
 
-const Searchbar = ({ setSearchString }) => {
+const Searchbar = ({
+  setSearchString,
+  searchToRedux,
+  setUpperCount,
+  setLowerCount,
+}) => {
   const handleEnterPress = (evt) => {
     if (evt.charCode === 13) {
       let button = document.getElementsByClassName("hero-search-submit")[0];
+      if (searchToRedux) {
+        searchToRedux();
+        if (setUpperCount && setLowerCount) {
+          setUpperCount(8);
+          setLowerCount(0);
+        }
+      }
       button.click();
     }
   };
   const handleInputChange = (evt) => {
     setSearchString(evt.target.value);
+  };
+  const handleSubmitClick = () => {
+    searchToRedux();
+    if (setUpperCount && setLowerCount) {
+      setUpperCount(8);
+      setLowerCount(0);
+    }
   };
   return (
     <SearchBox>
@@ -19,7 +38,11 @@ const Searchbar = ({ setSearchString }) => {
         onKeyPress={handleEnterPress}
         onChange={handleInputChange}
       />
-      <SearchBoxSubmit to="/shop" className="hero-search-submit">
+      <SearchBoxSubmit
+        to="/shop"
+        className="hero-search-submit"
+        onClick={handleSubmitClick}
+      >
         <i className="fas fa-search"></i>
       </SearchBoxSubmit>
     </SearchBox>

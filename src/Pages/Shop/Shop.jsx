@@ -16,6 +16,8 @@ import {
 import { Select } from "./styled";
 import { JCUXButton } from "../../Components/JCUX/JCUXButton";
 import Searchbar from "../../Components/Searchbar";
+import { updateFilters, updateSearchString } from "../../Redux/actions/shop";
+import { connect } from "react-redux";
 
 const basicOptions = [
   { key: "none", value: "none", text: "none" },
@@ -38,23 +40,27 @@ const orientationOptions = [
   { key: "unisex", value: "unisex", text: "unisex" },
 ];
 
-const Shop = () => {
+const Shop = ({
+  searchString,
+  updateSearchString,
+  typeFilter: typeFilterFinal,
+  basicFilter: basicFilterFinal,
+  orientationFilter: orientationFilterFinal,
+  updateFilters,
+}) => {
   const { loading, error, data } = useQuery(GET_PRODUCTS);
 
   const [basicFilter, setBasicFilter] = useState("none");
   const [typeFilter, setTypeFilter] = useState("none");
   const [orientationFilter, setOrientationFilter] = useState("none");
-  const [basicFilterFinal, setBasicFilterFinal] = useState("none");
-  const [typeFilterFinal, setTypeFilterFinal] = useState("none");
-  const [orientationFilterFinal, setOrientationFilterFinal] = useState("none");
-  const [searchString, setSearchString] = useState("");
+  const [searchStringLocal, setSearchString] = useState("");
   const [upperCount, setUpperCount] = useState(8);
   const [lowerCount, setLowerCount] = useState(0);
   const [currentPage, setCurrentPage] = useState(1);
 
   useEffect(() => {
     window.scrollTo(0, 0);
-  });
+  }, []);
 
   if (loading) {
     return (
@@ -123,17 +129,19 @@ const Shop = () => {
   });
   const maxPageCount = Math.ceil(filteredProducts.length / 8);
 
-  filteredProducts = filteredProducts.slice(lowerCount, upperCount);
+  const slicedProducts = filteredProducts.slice(lowerCount, upperCount);
 
   const handlePrevClick = () => {
     if (lowerCount >= 8) {
+      window.scrollTo(0, 0);
       setLowerCount(lowerCount - 8);
       setUpperCount(upperCount - 8);
       setCurrentPage(currentPage - 1);
     }
   };
   const handleNextClick = () => {
-    if (upperCount < data.products.length) {
+    if (upperCount < filteredProducts.length) {
+      window.scrollTo(0, 0);
       setLowerCount(lowerCount + 8);
       setUpperCount(upperCount + 8);
       setCurrentPage(currentPage + 1);
@@ -149,12 +157,22 @@ const Shop = () => {
     setOrientationFilter(select.value);
   };
   const handleSetFilters = () => {
-    setBasicFilterFinal(basicFilter);
-    setTypeFilterFinal(typeFilter);
-    setOrientationFilterFinal(orientationFilter);
+    console.log({
+      basicFilter,
+      typeFilter,
+      orientationFilter,
+    });
+    updateFilters({
+      basicFilter,
+      typeFilter,
+      orientationFilter,
+    });
     setLowerCount(0);
     setUpperCount(8);
     setCurrentPage(1);
+  };
+  const searchToRedux = () => {
+    updateSearchString(searchStringLocal);
   };
   return (
     <JCUXContainer>
@@ -180,7 +198,12 @@ const Shop = () => {
         </FiltersWrapper>
         <JCUXButton onClick={handleSetFilters}>Apply Filters</JCUXButton>
       </FiltersWrapperOuter>
-      <Searchbar setSearchString={setSearchString} hasSearch />
+      <Searchbar
+        setSearchString={setSearchString}
+        searchToRedux={searchToRedux}
+        setLowerCount={setLowerCount}
+        setUpperCount={setUpperCount}
+      />
       <PageControlsOuter>
         <JCUXButton disabled={lowerCount < 8} onClick={handlePrevClick}>
           Previous Page
@@ -191,14 +214,14 @@ const Shop = () => {
             : "No products were found."}
         </PageNumber>
         <JCUXButton
-          disabled={upperCount > data.products.length}
+          disabled={upperCount > filteredProducts.length}
           onClick={handleNextClick}
         >
           Next Page
         </JCUXButton>
       </PageControlsOuter>
       <ProductsWrapper>
-        {filteredProducts.map((product) => {
+        {slicedProducts.map((product) => {
           return <ProductBox product={product} />;
         })}
       </ProductsWrapper>
@@ -212,7 +235,7 @@ const Shop = () => {
             : "No products were found."}
         </PageNumber>
         <JCUXButton
-          disabled={upperCount > data.products.length}
+          disabled={upperCount > filteredProducts.length}
           onClick={handleNextClick}
         >
           Next Page
@@ -222,4 +245,23 @@ const Shop = () => {
   );
 };
 
-export default Shop;
+const mapStateToProps = (state) => {
+  return {
+    searchString: state.shop.searchString,
+    typeFilter: state.shop.typeFilter,
+    basicFilter: state.shop.basicFilter,
+    orientationFilter: state.shop.orientationFilter,
+  };
+};
+const mapDispatchToProps = (dispatch) => {
+  return {
+    updateSearchString: (searchString) => {
+      dispatch(updateSearchString(searchString));
+    },
+    updateFilters: (filters) => {
+      dispatch(updateFilters(filters));
+    },
+  };
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(Shop);

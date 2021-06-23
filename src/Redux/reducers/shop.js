@@ -11,6 +11,8 @@ export const shopReducer = (state = initialState, action) => {
   switch (action.type) {
     case UPDATE_FILTERS:
       const { basicFilter, typeFilter, orientationFilter } = action.payload;
+      console.log("TESTINGA");
+      console.log({ basicFilter, typeFilter, orientationFilter });
       return {
         ...state,
         basicFilter,
