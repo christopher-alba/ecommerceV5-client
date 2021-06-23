@@ -1,11 +1,13 @@
 import { useMutation } from "@apollo/client";
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
 import { Image, Modal, Form } from "semantic-ui-react";
 import { LOGIN } from "../../ApolloClient/mutations";
 import { JCUXButton } from "../JCUX/JCUXButton";
+import { ThemeContext } from "styled-components";
 
 const LoginModal = () => {
   const [login] = useMutation(LOGIN);
+  const themeContext = useContext(ThemeContext);
   const [open, setOpen] = useState(false);
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
@@ -51,7 +53,12 @@ const LoginModal = () => {
     >
       <Modal.Header>Sign In</Modal.Header>
       <Modal.Content image>
-        <Image size="large" src="/hero.jpg" wrapped style={{ width: "100%" }} />
+        <Image
+          size="large"
+          src={themeContext.name === "light" ? "/hero.jpg" : "/hero-dark.jpg"}
+          wrapped
+          style={{ width: "100%" }}
+        />
         <Modal.Description style={{ width: "100%" }}>
           <Form onSubmit={handleSubmit}>
             <Form.Input
