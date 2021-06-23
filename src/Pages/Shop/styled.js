@@ -37,3 +37,25 @@ export const FiltersHeading = styled("h1")`
   margin-right: 50px;
   font-weight: 200;
 `;
+
+export const FiltersWrapperOuter = styled("div")`
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 30px;
+  @media (max-width: 1220px) {
+    flex-direction: column;
+  }
+`;
+
+export const PageControlsOuter = styled("div")`
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 30px;
+  margin-bottom: 30px;
+`;
+
+export const PageNumber = styled("h4")`
+  margin-top: 0px;
+  margin-bottom: 0px;
+`;

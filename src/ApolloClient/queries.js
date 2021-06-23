@@ -24,6 +24,8 @@ export const GET_PRODUCTS = gql`
       images {
         url
       }
+      orientation
+      clothingType
     }
   }
 `;
