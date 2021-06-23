@@ -6,6 +6,7 @@ import { Route } from "react-router-dom";
 import "semantic-ui-css/semantic.min.css";
 import Navbar from "./Components/Navbar";
 import Home from "./Pages/Home";
+import Shop from "./Pages/Shop";
 
 const App = () => {
   const [selectedTheme, setSelectedTheme] = useState(themes.data.light);
@@ -18,6 +19,7 @@ const App = () => {
         selectedTheme={selectedTheme}
       />
       <Route exact path="/" component={Home} />
+      <Route exact path="/shop" component={Shop} />
       <Route />
     </ThemeProvider>
   );

@@ -5,19 +5,22 @@ import {
   ImageWrapper,
   ProductText,
   ProductTextWrapper,
+  ProductBoxInner,
 } from "./styled";
 
 const ProductBox = ({ product }) => {
   const { name, price, images, id } = product;
   return (
     <ProductBoxOuter to={`/products/${id}`}>
-      <ImageWrapper>
-        <ProductImage src={images[0].url} alt="" />
-      </ImageWrapper>
-      <ProductTextWrapper>
-        <ProductText>{name}</ProductText>
-        <ProductText>NZ${price}</ProductText>
-      </ProductTextWrapper>
+      <ProductBoxInner>
+        <ImageWrapper>
+          <ProductImage src={images[0].url} alt="" />
+        </ImageWrapper>
+        <ProductTextWrapper>
+          <ProductText>{name}</ProductText>
+          <ProductText>NZ${price}</ProductText>
+        </ProductTextWrapper>
+      </ProductBoxInner>
     </ProductBoxOuter>
   );
 };
