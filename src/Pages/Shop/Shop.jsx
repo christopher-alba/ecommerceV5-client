@@ -184,16 +184,19 @@ const Shop = ({
             placeholder="Basic"
             options={basicOptions}
             onChange={handleBasicChange}
+            defaultValue={basicFilterFinal}
           />
           <Select
             placeholder="Category"
             options={categoryOptions}
             onChange={handleCategoryChange}
+            defaultValue={typeFilterFinal}
           />
           <Select
             placeholder="Orientation"
             options={orientationOptions}
             onChange={handleOrientationChange}
+            defaultValue={orientationFilterFinal}
           />
         </FiltersWrapper>
         <JCUXButton onClick={handleSetFilters}>Apply Filters</JCUXButton>

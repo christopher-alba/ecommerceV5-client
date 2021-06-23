@@ -1,4 +1,5 @@
 import React from "react";
+import { connect } from "react-redux";
 import { SearchBoxInput, SearchBoxSubmit, SearchBox } from "./styled";
 
 const Searchbar = ({
@@ -6,6 +7,7 @@ const Searchbar = ({
   searchToRedux,
   setUpperCount,
   setLowerCount,
+  searchString,
 }) => {
   const handleEnterPress = (evt) => {
     if (evt.charCode === 13) {
@@ -37,6 +39,7 @@ const Searchbar = ({
         placeholder="search here"
         onKeyPress={handleEnterPress}
         onChange={handleInputChange}
+        defaultValue={searchString}
       />
       <SearchBoxSubmit
         to="/shop"
@@ -49,4 +52,10 @@ const Searchbar = ({
   );
 };
 
-export default Searchbar;
+const mapStateToProps = (state) => {
+  return {
+    searchString: state.shop.searchString,
+  };
+};
+
+export default connect(mapStateToProps)(Searchbar);

@@ -11,8 +11,25 @@ import {
 } from "./styled";
 import useWindowWidth from "../../../../Hooks/useWindowWidth";
 import { Link } from "react-router-dom";
-const CategoryBox = ({ url, category, description, imageFirst }) => {
+import { connect } from "react-redux";
+import { updateFilters } from "../../../../Redux/actions/shop";
+
+const CategoryBox = ({
+  url,
+  category,
+  description,
+  imageFirst,
+  value,
+  updateFilters,
+}) => {
   const windowWidth = useWindowWidth();
+  const handleCategoryClick = () => {
+    updateFilters({
+      categoryFilter: "none",
+      typeFilter: value,
+      orientationFilter: "none",
+    });
+  };
   if (imageFirst) {
     return (
       <CategoryOuterBox>
@@ -22,7 +39,10 @@ const CategoryBox = ({ url, category, description, imageFirst }) => {
         <CategoryInnerBox>
           <CategoryTitle>{category}</CategoryTitle>
           <CategoryDescription>{description}</CategoryDescription>
-          <Link to={`/shop?category=${category.toLowerCase()}`}>
+          <Link
+            to={`/shop?category=${category.toLowerCase()}`}
+            onClick={handleCategoryClick}
+          >
             <ShopLink>SHOP FOR {category}</ShopLink>
           </Link>
         </CategoryInnerBox>
@@ -35,7 +55,10 @@ const CategoryBox = ({ url, category, description, imageFirst }) => {
           <CategoryInnerBoxLeft>
             <CategoryTitle>{category}</CategoryTitle>
             <CategoryDescription>{description}</CategoryDescription>
-            <Link to={`/shop?category=${category.toLowerCase()}`}>
+            <Link
+              to={`/shop?category=${category.toLowerCase()}`}
+              onClick={handleCategoryClick}
+            >
               <ShopLink>SHOP FOR {category}</ShopLink>
             </Link>
           </CategoryInnerBoxLeft>
@@ -53,7 +76,10 @@ const CategoryBox = ({ url, category, description, imageFirst }) => {
           <CategoryInnerBox>
             <CategoryTitle>{category}</CategoryTitle>
             <CategoryDescription>{description}</CategoryDescription>
-            <Link to={`/shop?category=${category.toLowerCase()}`}>
+            <Link
+              to={`/shop?category=${category.toLowerCase()}`}
+              onClick={handleCategoryClick}
+            >
               <ShopLink>SHOP FOR {category}</ShopLink>
             </Link>
           </CategoryInnerBox>
@@ -63,4 +89,12 @@ const CategoryBox = ({ url, category, description, imageFirst }) => {
   }
 };
 
-export default CategoryBox;
+const mapDispatchToProps = (dispatch) => {
+  return {
+    updateFilters: (filters) => {
+      dispatch(updateFilters(filters));
+    },
+  };
+};
+
+export default connect(undefined, mapDispatchToProps)(CategoryBox);
