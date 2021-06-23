@@ -16,11 +16,11 @@ import {
 import { JCUXButton as Button } from "../JCUX/JCUXButton";
 import { JCUXContainer } from "../JCUX/JCUXContainer";
 import useWindowWidth from "../../Hooks/useWindowWidth";
+import LoginModal from "../LoginModal";
 import styled from "styled-components";
-
-const JCUXButton = styled(Button)`
-  box-shadow: none !important;
-`;
+import { AUTHENTICATE } from "../../ApolloClient/queries";
+import { useQuery } from "@apollo/client";
+import { JCUXButton } from "./styled";
 
 const JCUXMenuButton = styled(Button)`
   box-shadow: none !important;
@@ -30,6 +30,8 @@ const JCUXMenuButton = styled(Button)`
 `;
 
 const Navbar = ({ setSelectedTheme, themes, selectedTheme }) => {
+  const { loading, error, data: authData } = useQuery(AUTHENTICATE);
+
   const handleRadioChange = (evt, target) => {
     if (target.checked) {
       setSelectedTheme(themes.data.dark);
@@ -37,12 +39,29 @@ const Navbar = ({ setSelectedTheme, themes, selectedTheme }) => {
       setSelectedTheme(themes.data.light);
     }
   };
+  const handleSignOut = () => {
+    localStorage.removeItem("authorization");
+    window.location.reload();
+  };
   const windowWidth = useWindowWidth();
+  const isLoggedIn = () => {
+    if (
+      authData &&
+      authData.me.token === localStorage.getItem("authorization")
+    ) {
+      return true;
+    }
+    return false;
+  };
   if (windowWidth >= 1200) {
     return (
       <NavbarDesktop
         handleRadioChange={handleRadioChange}
         selectedTheme={selectedTheme}
+        isLoggedIn={isLoggedIn}
+        handleSignOut={handleSignOut}
+        loading={loading}
+        error={error}
       />
     );
   } else {
@@ -50,12 +69,21 @@ const Navbar = ({ setSelectedTheme, themes, selectedTheme }) => {
       <NavbarMobile
         handleRadioChange={handleRadioChange}
         selectedTheme={selectedTheme}
+        isLoggedIn={isLoggedIn}
+        handleSignOut={handleSignOut}
+        loading={loading}
+        error={error}
       />
     );
   }
 };
 
-const NavbarDesktop = ({ handleRadioChange, selectedTheme }) => {
+const NavbarDesktop = ({
+  handleRadioChange,
+  selectedTheme,
+  isLoggedIn,
+  handleSignOut,
+}) => {
   return (
     <NavbarBoxOuter>
       <JCUXContainer>
@@ -76,7 +104,11 @@ const NavbarDesktop = ({ handleRadioChange, selectedTheme }) => {
               />
               <NavbarIcon name="moon" />
             </NavbarThemeBox>
-            <JCUXButton>Sign In</JCUXButton>
+            {isLoggedIn() ? (
+              <JCUXButton onClick={handleSignOut}>Sign Out</JCUXButton>
+            ) : (
+              <LoginModal />
+            )}
             <JCUXButton>Sign Up</JCUXButton>
           </NavbarRightBox>
         </NavbarBoxInner>
@@ -85,7 +117,12 @@ const NavbarDesktop = ({ handleRadioChange, selectedTheme }) => {
   );
 };
 
-const NavbarMobile = ({ handleRadioChange, selectedTheme }) => {
+const NavbarMobile = ({
+  handleRadioChange,
+  selectedTheme,
+  isLoggedIn,
+  handleSignOut,
+}) => {
   const [menuOn, setMenuOn] = useState(false);
   const toggleMenu = () => {
     let menu = document.getElementsByClassName("navbar-menu-icon")[0];
@@ -111,6 +148,8 @@ const NavbarMobile = ({ handleRadioChange, selectedTheme }) => {
           <NavbarMobileMenu
             handleRadioChange={handleRadioChange}
             selectedTheme={selectedTheme}
+            isLoggedIn={isLoggedIn}
+            handleSignOut={handleSignOut}
           />
         )}
       </JCUXContainer>
@@ -118,7 +157,12 @@ const NavbarMobile = ({ handleRadioChange, selectedTheme }) => {
   );
 };
 
-const NavbarMobileMenu = ({ handleRadioChange, selectedTheme }) => {
+const NavbarMobileMenu = ({
+  handleRadioChange,
+  selectedTheme,
+  isLoggedIn,
+  handleSignOut,
+}) => {
   return (
     <>
       <MenuBox1>
@@ -138,7 +182,11 @@ const NavbarMobileMenu = ({ handleRadioChange, selectedTheme }) => {
         <NavbarIcon name="moon" />
       </NavbarThemeBox>
       <MenuBox2>
-        <JCUXButton>Sign In</JCUXButton>
+        {isLoggedIn() ? (
+          <JCUXButton onClick={handleSignOut}>Sign Out</JCUXButton>
+        ) : (
+          <LoginModal />
+        )}
         <JCUXButton>Sign Up</JCUXButton>
       </MenuBox2>
     </>

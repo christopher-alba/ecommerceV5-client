@@ -1,6 +1,7 @@
 import { Link } from "react-router-dom";
 import styled from "styled-components";
 import { Radio, Icon } from "semantic-ui-react";
+import { JCUXButton as Button } from "../JCUX/JCUXButton";
 
 export const NavbarBoxOuter = styled("div")`
   background: ${({ theme }) => theme.colors.primary};
@@ -8,8 +9,8 @@ export const NavbarBoxOuter = styled("div")`
   padding-top: 20px;
   padding-bottom: 20px;
   position: sticky;
-  top:0px;
-  z-index: 10000;
+  top: 0px;
+  z-index: 1;
 `;
 
 export const NavbarLinks = styled(Link)`
@@ -48,6 +49,9 @@ export const NavbarLinksBox = styled("div")`
     display: flex;
     flex-direction: column;
   }
+`;
+export const JCUXButton = styled(Button)`
+  box-shadow: none !important;
 `;
 
 export const NavbarBoxInner = styled("div")`
@@ -99,4 +103,10 @@ export const MenuBox1 = styled("div")`
 `;
 export const MenuBox2 = styled("div")`
   margin-top: 20px;
+  * {
+    margin-right: 20px !important;
+    &:last-child {
+      margin-right: 0px !important;
+    }
+  }
 `;

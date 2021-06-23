@@ -29,3 +29,14 @@ export const GET_PRODUCTS = gql`
     }
   }
 `;
+
+export const AUTHENTICATE = gql`
+  query Authenticate {
+    me {
+      username
+      password
+      token
+      permission
+    }
+  }
+`;
