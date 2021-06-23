@@ -20,7 +20,6 @@ export const Select = styled(SemanticSelect)`
 export const FiltersWrapper = styled("div")`
   display: flex;
   flex-wrap: wrap;
-  justify-content: center;
   ${Select} {
     margin-right: 20px;
   }
