@@ -1,4 +1,11 @@
 import React, { useState } from "react";
+import {
+  PreviousButton,
+  NextButton,
+  CarouselOuterBox,
+  CarouselIndicator,
+  CarouselIndicatorsWrapper,
+} from "./styled";
 
 const Carousel = ({ children }) => {
   const [currentIndex, setCurrentIndex] = useState(0);
@@ -22,11 +29,27 @@ const Carousel = ({ children }) => {
     }
   };
   return (
-    <div>
-      <div onClick={handlePrevClick}>Prev</div>
+    <CarouselOuterBox>
+      <PreviousButton onClick={handlePrevClick}>
+        <i className="fas fa-chevron-left"></i>
+      </PreviousButton>
       {arrayOfSlides[currentIndex]}
-      <div onClick={handleNextClick}>Next</div>
-    </div>
+      <NextButton onClick={handleNextClick}>
+        <i className="fas fa-chevron-right"></i>
+      </NextButton>
+      <CarouselIndicatorsWrapper>
+        {children.map((child, index) => {
+          return (
+            <CarouselIndicator
+              style={{ background: currentIndex === index ? "lightblue" : "white" }}
+              onClick={() => {
+                setCurrentIndex(index);
+              }}
+            ></CarouselIndicator>
+          );
+        })}
+      </CarouselIndicatorsWrapper>
+    </CarouselOuterBox>
   );
 };
 

@@ -26,17 +26,18 @@ const Product = () => {
   const product = data.product;
   return (
     <div>
-      <JCUXContainer>
-        <Carousel>
-          {product.images.map((image) => {
-            return (
-              <div>
-                <img src={image.url} alt="" />
-              </div>
-            );
-          })}
-        </Carousel>
-      </JCUXContainer>
+      <Carousel>
+        {product.images.map((image) => {
+          return (
+            <img
+              style={{ height: "100%", width: "100%", objectFit: "cover" }}
+              src={image.url}
+              alt=""
+            />
+          );
+        })}
+      </Carousel>
+      <JCUXContainer></JCUXContainer>
     </div>
   );
 };

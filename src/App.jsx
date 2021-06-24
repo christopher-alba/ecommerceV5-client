@@ -8,6 +8,10 @@ import Navbar from "./Components/Navbar";
 import Home from "./Pages/Home";
 import Shop from "./Pages/Shop";
 import Product from "./Pages/Product";
+import AOS from "aos";
+import "aos/dist/aos.css"; // You can also use <link> for styles
+// ..
+AOS.init();
 
 const App = () => {
   const [selectedTheme, setSelectedTheme] = useState(themes.data.light);
@@ -19,9 +23,33 @@ const App = () => {
         themes={themes}
         selectedTheme={selectedTheme}
       />
-      <Route exact path="/" component={Home} />
-      <Route exact path="/shop" component={Shop} />
-      <Route exact path="/product/:id" component={Product} />
+      <Route
+        exact
+        path="/"
+        component={() => (
+          <div data-aos="fade-in">
+            <Home />
+          </div>
+        )}
+      />
+      <Route
+        exact
+        path="/shop"
+        component={() => (
+          <div data-aos="fade-in">
+            <Shop />
+          </div>
+        )}
+      />
+      <Route
+        exact
+        path="/product/:id"
+        component={() => (
+          <div data-aos="fade-in">
+            <Product />
+          </div>
+        )}
+      />
       <Route />
     </ThemeProvider>
   );
