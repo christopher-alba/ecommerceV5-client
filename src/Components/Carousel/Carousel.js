@@ -6,9 +6,9 @@ import {
   CarouselIndicator,
   CarouselIndicatorsWrapper,
 } from "./styled";
-import { Fade } from "../../Components/JCUX/JCUXFade";
+import { Fade } from "../JCUX/JCUXFade";
 
-const Carousel = ({ children }) => {
+export const Carousel = ({ children }) => {
   const [currentIndex, setCurrentIndex] = useState(0);
 
   const handlePrevClick = () => {
@@ -55,4 +55,19 @@ const Carousel = ({ children }) => {
   );
 };
 
-export default Carousel;
+export const CarouselImage = ({ url }) => {
+  return (
+    <img
+      style={{
+        height: "100%",
+        width: "100%",
+        objectFit: "cover",
+        position: "absolute",
+        top: "0px",
+        left: "0px",
+      }}
+      src={url}
+      alt=""
+    />
+  );
+};

@@ -3,9 +3,8 @@ import React from "react";
 import { GET_PRODUCT } from "../../ApolloClient/queries";
 import { Loader } from "semantic-ui-react";
 import { JCUXContainer } from "../../Components/JCUX/JCUXContainer";
-import Carousel from "../../Components/Carousel";
-
-const Product = ({ currentIndex }) => {
+import { Carousel, CarouselImage } from "../../Components/Carousel";
+const Product = () => {
   const id = window.location.pathname.split("/")[2];
   console.log(id);
   const { loading, error, data } = useQuery(GET_PRODUCT, {
@@ -28,21 +27,8 @@ const Product = ({ currentIndex }) => {
   return (
     <div>
       <Carousel>
-        {product.images.map((image, index) => {
-          return (
-            <img
-              style={{
-                height: "100%",
-                width: "100%",
-                objectFit: "cover",
-                position: "absolute",
-                top: "0px",
-                left: "0px",
-              }}
-              src={image.url}
-              alt=""
-            />
-          );
+        {product.images.map((image) => {
+          return <CarouselImage url={image.url} />;
         })}
       </Carousel>
       <JCUXContainer></JCUXContainer>
