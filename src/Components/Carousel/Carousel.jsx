@@ -53,6 +53,7 @@ const Carousel = ({ children, updateCurrentIndex }) => {
               }}
               onClick={() => {
                 setCurrentIndex(index);
+                updateCurrentIndex(index);
               }}
             ></CarouselIndicator>
           );
