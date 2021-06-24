@@ -82,7 +82,7 @@ const TopPicks = () => {
     <TopPicksOuterBox>
       <JCUXContainer>
         <JCUXTitle>MOST VIEWED PRODUCTS</JCUXTitle>
-        <TopPicksBox>
+        <TopPicksBox data-aos="fade-in">
           <ArrowBox onClick={onLeftArrowClick}>
             <i className="fas fa-chevron-left"></i>
           </ArrowBox>

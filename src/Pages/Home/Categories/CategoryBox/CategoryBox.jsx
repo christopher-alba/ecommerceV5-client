@@ -32,7 +32,7 @@ const CategoryBox = ({
   };
   if (imageFirst) {
     return (
-      <CategoryOuterBox>
+      <CategoryOuterBox data-aos="fade-in">
         <ImageWrapper>
           <CategoryImage src={url} />
         </ImageWrapper>
@@ -51,7 +51,7 @@ const CategoryBox = ({
   } else {
     if (windowWidth > 1000) {
       return (
-        <CategoryOuterBox>
+        <CategoryOuterBox data-aos="fade-in">
           <CategoryInnerBoxLeft>
             <CategoryTitle>{category}</CategoryTitle>
             <CategoryDescription>{description}</CategoryDescription>
@@ -69,7 +69,7 @@ const CategoryBox = ({
       );
     } else {
       return (
-        <CategoryOuterBox>
+        <CategoryOuterBox data-aos="fade-in">
           <ImageWrapper>
             <CategoryImage src={url} />
           </ImageWrapper>
