@@ -30,6 +30,26 @@ export const GET_PRODUCTS = gql`
   }
 `;
 
+export const GET_PRODUCT = gql`
+  query GetProduct($id: ID!) {
+    product(id: $id) {
+      id
+      name
+      price
+      description
+      images {
+        url
+      }
+      orientation
+      clothingType
+      sizes {
+        stock
+        size
+      }
+    }
+  }
+`;
+
 export const AUTHENTICATE = gql`
   query Authenticate {
     me {

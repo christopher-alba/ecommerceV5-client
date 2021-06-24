@@ -10,7 +10,7 @@ import {
 const ProductBox = ({ product }) => {
   const { name, price, images, id } = product;
   return (
-    <ProductBoxOuter to={`/products/${id}`}>
+    <ProductBoxOuter to={`/product/${id}`}>
       <ImageWrapper>
         <ProductImage src={images[0].url} alt="" />
       </ImageWrapper>

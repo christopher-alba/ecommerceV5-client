@@ -114,6 +114,10 @@ export const ProfileIcon = styled("div")`
   background: ${({ theme }) => theme.colors.secondary};
   color: ${({ theme }) => theme.colors.primary};
   cursor: pointer;
+  &:hover {
+    background: ${({ theme }) => theme.colors.secondaryHover};
+  }
+  transition: 300ms;
 `;
 
 export const ProfileDropdownMenu = styled("div")`
