@@ -1,6 +1,4 @@
 import React, { useState } from "react";
-import { connect } from "react-redux";
-import { updateCurrentIndex } from "../../Redux/actions/carousel";
 import {
   PreviousButton,
   NextButton,
@@ -8,30 +6,23 @@ import {
   CarouselIndicator,
   CarouselIndicatorsWrapper,
 } from "./styled";
+import { Fade } from "../../Components/JCUX/JCUXFade";
 
-const Carousel = ({ children, updateCurrentIndex }) => {
+const Carousel = ({ children }) => {
   const [currentIndex, setCurrentIndex] = useState(0);
-  const arrayOfSlides = [];
 
-  children.forEach((child) => {
-    arrayOfSlides.push(child);
-  });
   const handlePrevClick = () => {
     if (currentIndex === 0) {
       setCurrentIndex(children.length - 1);
-      updateCurrentIndex(children.length - 1);
     } else {
       setCurrentIndex(currentIndex - 1);
-      updateCurrentIndex(currentIndex - 1);
     }
   };
   const handleNextClick = () => {
     if (currentIndex === children.length - 1) {
       setCurrentIndex(0);
-      updateCurrentIndex(0);
     } else {
       setCurrentIndex(currentIndex + 1);
-      updateCurrentIndex(currentIndex + 1);
     }
   };
 
@@ -40,7 +31,9 @@ const Carousel = ({ children, updateCurrentIndex }) => {
       <PreviousButton onClick={handlePrevClick}>
         <i className="fas fa-chevron-left"></i>
       </PreviousButton>
-      {children}
+      {children.map((child, index) => {
+        return <Fade in={currentIndex === index}>{child}</Fade>;
+      })}
       <NextButton onClick={handleNextClick}>
         <i className="fas fa-chevron-right"></i>
       </NextButton>
@@ -53,7 +46,6 @@ const Carousel = ({ children, updateCurrentIndex }) => {
               }}
               onClick={() => {
                 setCurrentIndex(index);
-                updateCurrentIndex(index);
               }}
             ></CarouselIndicator>
           );
@@ -63,12 +55,4 @@ const Carousel = ({ children, updateCurrentIndex }) => {
   );
 };
 
-const mapDispatchToProps = (dispatch) => {
-  return {
-    updateCurrentIndex: (currentIndex) => {
-      dispatch(updateCurrentIndex(currentIndex));
-    },
-  };
-};
-
-export default connect(undefined, mapDispatchToProps)(Carousel);
+export default Carousel;

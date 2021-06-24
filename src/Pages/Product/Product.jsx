@@ -4,8 +4,6 @@ import { GET_PRODUCT } from "../../ApolloClient/queries";
 import { Loader } from "semantic-ui-react";
 import { JCUXContainer } from "../../Components/JCUX/JCUXContainer";
 import Carousel from "../../Components/Carousel";
-import { Fade } from "../../Components/JCUX/JCUXFade";
-import { connect } from "react-redux";
 
 const Product = ({ currentIndex }) => {
   const id = window.location.pathname.split("/")[2];
@@ -32,20 +30,18 @@ const Product = ({ currentIndex }) => {
       <Carousel>
         {product.images.map((image, index) => {
           return (
-            <Fade in={currentIndex === index}>
-              <img
-                style={{
-                  height: "100%",
-                  width: "100%",
-                  objectFit: "cover",
-                  position: "absolute",
-                  top: "0px",
-                  left: "0px",
-                }}
-                src={image.url}
-                alt=""
-              />
-            </Fade>
+            <img
+              style={{
+                height: "100%",
+                width: "100%",
+                objectFit: "cover",
+                position: "absolute",
+                top: "0px",
+                left: "0px",
+              }}
+              src={image.url}
+              alt=""
+            />
           );
         })}
       </Carousel>
@@ -54,10 +50,4 @@ const Product = ({ currentIndex }) => {
   );
 };
 
-const mapStateToProps = (state) => {
-  return {
-    currentIndex: state.carousel.currentIndex,
-  };
-};
-
-export default connect(mapStateToProps)(Product);
+export default Product;
