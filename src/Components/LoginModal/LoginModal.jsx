@@ -39,10 +39,12 @@ const LoginModal = () => {
   const handleNameChange = (evt) => {
     setUsernameError(false);
     setUsername(evt.target.value);
+    setLoginError("");
   };
   const handlePasswordChange = (evt) => {
     setPasswordError(false);
     setPassword(evt.target.value);
+    setLoginError("");
   };
   return (
     <Modal
@@ -93,7 +95,7 @@ const LoginModal = () => {
                 onChange={handlePasswordChange}
               />
             </Form.Input>
-            <h4>{loginError}</h4>
+            <h4 style={{ color: "black" }}>{loginError}</h4>
             <JCUXButton type="submit">Submit</JCUXButton>
           </Form>
         </Modal.Description>
