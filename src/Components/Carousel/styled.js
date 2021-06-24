@@ -11,6 +11,7 @@ export const PreviousButton = styled("div")`
   align-items: center;
   font-size: 3rem;
   color: white;
+  z-index: 1;
   text-shadow: 0px 0px 10px ${({ theme }) => theme.colors.dropShadow};
   &:hover {
     background: ${({ theme }) => theme.colors.dropShadow};

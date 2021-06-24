@@ -1,4 +1,6 @@
 import React, { useState } from "react";
+import { connect } from "react-redux";
+import { updateCurrentIndex } from "../../Redux/actions/carousel";
 import {
   PreviousButton,
   NextButton,
@@ -7,7 +9,7 @@ import {
   CarouselIndicatorsWrapper,
 } from "./styled";
 
-const Carousel = ({ children }) => {
+const Carousel = ({ children, updateCurrentIndex }) => {
   const [currentIndex, setCurrentIndex] = useState(0);
   const arrayOfSlides = [];
 
@@ -17,23 +19,28 @@ const Carousel = ({ children }) => {
   const handlePrevClick = () => {
     if (currentIndex === 0) {
       setCurrentIndex(children.length - 1);
+      updateCurrentIndex(children.length - 1);
     } else {
       setCurrentIndex(currentIndex - 1);
+      updateCurrentIndex(currentIndex - 1);
     }
   };
   const handleNextClick = () => {
     if (currentIndex === children.length - 1) {
       setCurrentIndex(0);
+      updateCurrentIndex(0);
     } else {
       setCurrentIndex(currentIndex + 1);
+      updateCurrentIndex(currentIndex + 1);
     }
   };
+
   return (
     <CarouselOuterBox>
       <PreviousButton onClick={handlePrevClick}>
         <i className="fas fa-chevron-left"></i>
       </PreviousButton>
-      {arrayOfSlides[currentIndex]}
+      {children}
       <NextButton onClick={handleNextClick}>
         <i className="fas fa-chevron-right"></i>
       </NextButton>
@@ -41,7 +48,9 @@ const Carousel = ({ children }) => {
         {children.map((child, index) => {
           return (
             <CarouselIndicator
-              style={{ background: currentIndex === index ? "lightblue" : "white" }}
+              style={{
+                background: currentIndex === index ? "#3477eb" : "white",
+              }}
               onClick={() => {
                 setCurrentIndex(index);
               }}
@@ -53,4 +62,12 @@ const Carousel = ({ children }) => {
   );
 };
 
-export default Carousel;
+const mapDispatchToProps = (dispatch) => {
+  return {
+    updateCurrentIndex: (currentIndex) => {
+      dispatch(updateCurrentIndex(currentIndex));
+    },
+  };
+};
+
+export default connect(undefined, mapDispatchToProps)(Carousel);
