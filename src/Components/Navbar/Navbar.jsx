@@ -17,6 +17,7 @@ import { JCUXButton as Button } from "../JCUX/JCUXButton";
 import { JCUXContainer } from "../JCUX/JCUXContainer";
 import useWindowWidth from "../../Hooks/useWindowWidth";
 import LoginModal from "../LoginModal";
+import RegisterModal from "../RegisterModal";
 import styled from "styled-components";
 import { AUTHENTICATE } from "../../ApolloClient/queries";
 import { useQuery } from "@apollo/client";
@@ -53,7 +54,7 @@ const Navbar = ({ setSelectedTheme, themes, selectedTheme }) => {
     }
     return false;
   };
-  if (windowWidth >= 1200) {
+  if (windowWidth > 1200) {
     return (
       <NavbarDesktop
         handleRadioChange={handleRadioChange}
@@ -109,7 +110,7 @@ const NavbarDesktop = ({
             ) : (
               <LoginModal />
             )}
-            <JCUXButton>Sign Up</JCUXButton>
+            <RegisterModal />
           </NavbarRightBox>
         </NavbarBoxInner>
       </JCUXContainer>
@@ -187,7 +188,7 @@ const NavbarMobileMenu = ({
         ) : (
           <LoginModal />
         )}
-        <JCUXButton>Sign Up</JCUXButton>
+        <RegisterModal />
       </MenuBox2>
     </>
   );

@@ -50,9 +50,7 @@ export const NavbarLinksBox = styled("div")`
     flex-direction: column;
   }
 `;
-export const JCUXButton = styled(Button)`
-  box-shadow: none !important;
-`;
+export const JCUXButton = styled(Button)``;
 
 export const NavbarBoxInner = styled("div")`
   display: flex;
