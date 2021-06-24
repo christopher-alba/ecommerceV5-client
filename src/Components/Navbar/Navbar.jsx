@@ -12,8 +12,12 @@ import {
   MenuBox1,
   MenuBox2,
   BarsIcon,
+  ProfileHeader,
+  ProfileIcon,
+  ProfileDropdownMenu,
 } from "./styled";
 import { JCUXButton as Button } from "../JCUX/JCUXButton";
+import { JCUXLinkButton } from "../JCUX/JCUXLinkButton";
 import { JCUXContainer } from "../JCUX/JCUXContainer";
 import useWindowWidth from "../../Hooks/useWindowWidth";
 import LoginModal from "../LoginModal";
@@ -88,6 +92,7 @@ const NavbarDesktop = ({
   handleSignOut,
   username,
 }) => {
+  const [userDropdown, setUserDropdown] = useState(false);
   return (
     <NavbarBoxOuter>
       <JCUXContainer>
@@ -101,19 +106,39 @@ const NavbarDesktop = ({
           <NavbarRightBox>
             <NavbarThemeBox>
               <NavbarIcon name="sun" />
-              <NavbarRadio
-                checked={selectedTheme.name === "dark"}
-                toggle
-                onChange={handleRadioChange}
-              />
+              <div
+                style={{
+                  marginRight: "5px",
+                  display: "flex",
+                  justifyContent: "center",
+                  alignItems: "center",
+                }}
+              >
+                <NavbarRadio
+                  checked={selectedTheme.name === "dark"}
+                  toggle
+                  onChange={handleRadioChange}
+                />
+              </div>
               <NavbarIcon name="moon" />
             </NavbarThemeBox>
             {isLoggedIn() ? (
-              <JCUXButton onClick={handleSignOut}>
-                <strong>{username}</strong> - Sign Out
-              </JCUXButton>
+              <>
+                <div style={{ marginRight: "20px" }}>
+                  <ProfileIconAndMenu
+                    userDropdown={userDropdown}
+                    setUserDropdown={setUserDropdown}
+                    username={username}
+                  />
+                </div>
+                <div style={{ marginRight: "20px" }}>
+                  <JCUXButton onClick={handleSignOut}>Sign Out</JCUXButton>
+                </div>
+              </>
             ) : (
-              <LoginModal />
+              <div style={{ marginRight: "20px" }}>
+                <LoginModal />
+              </div>
             )}
             <RegisterModal />
           </NavbarRightBox>
@@ -128,6 +153,7 @@ const NavbarMobile = ({
   selectedTheme,
   isLoggedIn,
   handleSignOut,
+  username,
 }) => {
   const [menuOn, setMenuOn] = useState(false);
   const toggleMenu = () => {
@@ -156,6 +182,7 @@ const NavbarMobile = ({
             selectedTheme={selectedTheme}
             isLoggedIn={isLoggedIn}
             handleSignOut={handleSignOut}
+            username={username}
           />
         )}
       </JCUXContainer>
@@ -168,7 +195,9 @@ const NavbarMobileMenu = ({
   selectedTheme,
   isLoggedIn,
   handleSignOut,
+  username,
 }) => {
+  const [userDropdown, setUserDropdown] = useState(false);
   return (
     <>
       <MenuBox1>
@@ -180,22 +209,67 @@ const NavbarMobileMenu = ({
       </MenuBox1>
       <NavbarThemeBox>
         <NavbarIcon name="sun" />
-        <NavbarRadio
-          toggle
-          onChange={handleRadioChange}
-          checked={selectedTheme.name === "dark"}
-        />
+        <div
+          style={{
+            marginRight: "5px",
+            display: "flex",
+            justifyContent: "center",
+            alignItems: "center",
+          }}
+        >
+          <NavbarRadio
+            checked={selectedTheme.name === "dark"}
+            toggle
+            onChange={handleRadioChange}
+          />
+        </div>
         <NavbarIcon name="moon" />
       </NavbarThemeBox>
       <MenuBox2>
         {isLoggedIn() ? (
-          <JCUXButton onClick={handleSignOut}>Sign Out</JCUXButton>
+          <div style={{ display: "flex" }}>
+            <div style={{ marginRight: "20px" }}>
+              <JCUXButton onClick={handleSignOut}>Sign Out</JCUXButton>
+            </div>
+            <div style={{ marginRight: "20px" }}>
+              <ProfileIconAndMenu
+                username={username}
+                userDropdown={userDropdown}
+                setUserDropdown={setUserDropdown}
+              />
+            </div>
+          </div>
         ) : (
-          <LoginModal />
+          <div style={{ marginRight: "20px" }}>
+            <LoginModal />
+          </div>
         )}
         <RegisterModal />
       </MenuBox2>
     </>
+  );
+};
+
+const ProfileIconAndMenu = ({ setUserDropdown, userDropdown, username }) => {
+  return (
+    <div style={{ position: "relative" }}>
+      <ProfileIcon onClick={() => setUserDropdown(!userDropdown)}>
+        <ProfileHeader>
+          {username[0].toUpperCase()} <i className="fas fa-bars"></i>
+        </ProfileHeader>
+      </ProfileIcon>
+      {userDropdown && (
+        <ProfileDropdownMenu>
+          <div style={{ display: "flex" }}>
+            Logged in as:
+            <strong style={{ marginLeft: "1rem" }}>{username}</strong>
+          </div>
+          <JCUXLinkButton inverted to="/profile">
+            Visit Profile
+          </JCUXLinkButton>
+        </ProfileDropdownMenu>
+      )}
+    </div>
   );
 };
 

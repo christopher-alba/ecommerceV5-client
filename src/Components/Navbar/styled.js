@@ -60,12 +60,6 @@ export const NavbarBoxInner = styled("div")`
 export const NavbarRightBox = styled("div")`
   display: flex;
   align-items: center;
-  * {
-    margin-right: 20px !important;
-    &:last-child {
-      margin-right: 0px !important;
-    }
-  }
 `;
 
 export const NavbarRadio = styled(Radio)`
@@ -101,10 +95,38 @@ export const MenuBox1 = styled("div")`
 `;
 export const MenuBox2 = styled("div")`
   margin-top: 20px;
-  * {
-    margin-right: 20px !important;
-    &:last-child {
-      margin-right: 0px !important;
-    }
+  display: flex;
+`;
+
+export const ProfileHeader = styled("h4")`
+  margin-right: 0px !important;
+  margin-bottom: 0px;
+  user-select: none;
+`;
+
+export const ProfileIcon = styled("div")`
+  border-radius: 50%;
+  height: 40px;
+  width: 40px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: ${({ theme }) => theme.colors.secondary};
+  color: ${({ theme }) => theme.colors.primary};
+  cursor: pointer;
+`;
+
+export const ProfileDropdownMenu = styled("div")`
+  background: ${({ theme }) => theme.colors.secondary};
+  color: ${({ theme }) => theme.colors.primary};
+  padding: 20px;
+  width: 300px;
+  position: absolute;
+  top: 60px;
+  display: flex;
+  flex-direction: column;
+  user-select: none;
+  @media (max-width: 500px) {
+    left: -125px;
   }
 `;
