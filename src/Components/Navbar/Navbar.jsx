@@ -63,6 +63,7 @@ const Navbar = ({ setSelectedTheme, themes, selectedTheme }) => {
         handleSignOut={handleSignOut}
         loading={loading}
         error={error}
+        username={authData && authData.me.username}
       />
     );
   } else {
@@ -74,6 +75,7 @@ const Navbar = ({ setSelectedTheme, themes, selectedTheme }) => {
         handleSignOut={handleSignOut}
         loading={loading}
         error={error}
+        username={authData && authData.me.username}
       />
     );
   }
@@ -84,6 +86,7 @@ const NavbarDesktop = ({
   selectedTheme,
   isLoggedIn,
   handleSignOut,
+  username,
 }) => {
   return (
     <NavbarBoxOuter>
@@ -106,7 +109,9 @@ const NavbarDesktop = ({
               <NavbarIcon name="moon" />
             </NavbarThemeBox>
             {isLoggedIn() ? (
-              <JCUXButton onClick={handleSignOut}>Sign Out</JCUXButton>
+              <JCUXButton onClick={handleSignOut}>
+                <strong>{username}</strong> - Sign Out
+              </JCUXButton>
             ) : (
               <LoginModal />
             )}

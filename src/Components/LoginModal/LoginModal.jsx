@@ -32,8 +32,8 @@ const LoginModal = () => {
         window.location.reload();
         setOpen(false);
       })
-      .catch(() => {
-        setLoginError("Invalid username or password");
+      .catch((res) => {
+        setLoginError(res.message);
       });
   };
   const handleNameChange = (evt) => {

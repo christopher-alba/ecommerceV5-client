@@ -1,19 +1,19 @@
 import { useMutation } from "@apollo/client";
 import React, { useState, useContext } from "react";
 import { Image, Modal, Form } from "semantic-ui-react";
-import { LOGIN } from "../../ApolloClient/mutations";
+import { REGISTER } from "../../ApolloClient/mutations";
 import { JCUXButton } from "../JCUX/JCUXButton";
 import { ThemeContext } from "styled-components";
 
 const RegisterModal = () => {
-  const [login] = useMutation(LOGIN);
+  const [register] = useMutation(REGISTER);
   const themeContext = useContext(ThemeContext);
   const [open, setOpen] = useState(false);
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [usernameError, setUsernameError] = useState(false);
   const [passwordError, setPasswordError] = useState(false);
-  const [loginError, setLoginError] = useState("");
+  const [registerError, setRegisterError] = useState("");
   const handleSubmit = () => {
     if (username === "") {
       setUsernameError(true);
@@ -21,30 +21,31 @@ const RegisterModal = () => {
     if (password === "") {
       setPasswordError(true);
     }
-    login({
+    register({
       variables: {
         username: username,
         password: password,
+        permission: "BASIC",
       },
     })
       .then((res) => {
-        localStorage.setItem("authorization", res.data.login.token);
+        localStorage.setItem("authorization", res.data.register.token);
         window.location.reload();
         setOpen(false);
       })
-      .catch(() => {
-        setLoginError("Invalid username or password");
+      .catch((res) => {
+        setRegisterError(res.message);
       });
   };
   const handleNameChange = (evt) => {
     setUsernameError(false);
     setUsername(evt.target.value);
-    setLoginError("");
+    setRegisterError("");
   };
   const handlePasswordChange = (evt) => {
     setPasswordError(false);
     setPassword(evt.target.value);
-    setLoginError("");
+    setRegisterError("");
   };
   return (
     <Modal
@@ -75,7 +76,12 @@ const RegisterModal = () => {
               style={{ display: "flex", flexDirection: "column" }}
             >
               <label>Username</label>
-              <input placeholder="Username" onChange={handleNameChange} />
+              <input
+                placeholder="Username"
+                onChange={handleNameChange}
+                maxLength={20}
+              />
+              <h4>Characters left: {20 - username.length}</h4>
             </Form.Input>
             <Form.Input
               error={
@@ -95,7 +101,7 @@ const RegisterModal = () => {
                 onChange={handlePasswordChange}
               />
             </Form.Input>
-            <h4 style={{ color: "black" }}>{loginError}</h4>
+            <h4 style={{ color: "black" }}>{registerError}</h4>
             <JCUXButton type="submit">Submit</JCUXButton>
           </Form>
         </Modal.Description>
