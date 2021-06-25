@@ -19,6 +19,7 @@ import { Select } from "./styled";
 import { JCUXButton } from "../../Components/JCUX/JCUXButton";
 import Searchbar from "../../Components/Searchbar";
 import { updateFilters, updateSearchString } from "../../Redux/actions/shop";
+import AdminProductBox from "../../Components/AdminProductBox/AdminProductBox";
 import { connect } from "react-redux";
 
 const basicOptions = [
@@ -57,6 +58,7 @@ const Shop = ({
   const [orientationFilter, setOrientationFilter] = useState(
     orientationFilterFinal
   );
+  const [selectedProduct, setSelectedProduct] = useState(undefined);
   const [searchStringLocal, setSearchString] = useState("");
   const [upperCount, setUpperCount] = useState(8);
   const [lowerCount, setLowerCount] = useState(0);
@@ -212,12 +214,16 @@ const Shop = ({
             <AdminControlButton fluid nowrap>
               Create Product
             </AdminControlButton>
-            <AdminControlButton fluid nowrap>
-              Update Product
-            </AdminControlButton>
-            <AdminControlButton fluid nowrap>
-              Delete Product
-            </AdminControlButton>
+            {selectedProduct && (
+              <>
+                <AdminControlButton fluid nowrap>
+                  Update Product
+                </AdminControlButton>
+                <AdminControlButton fluid nowrap>
+                  Delete Product
+                </AdminControlButton>
+              </>
+            )}
           </AdminControlsWrapper>
         </FiltersWrapperOuter>
       )}
@@ -245,7 +251,15 @@ const Shop = ({
       </PageControlsOuter>
       <ProductsWrapper>
         {slicedProducts.map((product) => {
-          return <ProductBox product={product} />;
+          return isAdmin ? (
+            <AdminProductBox
+              product={product}
+              setSelectedProduct={setSelectedProduct}
+              selectedProduct={selectedProduct}
+            />
+          ) : (
+            <ProductBox product={product} />
+          );
         })}
       </ProductsWrapper>
       <PageControlsOuter>
