@@ -1,9 +1,29 @@
-import React from "react";
+import React, { useState } from "react";
 import { connect } from "react-redux";
 import { clearCart, removeFromCart } from "../../Redux/actions/cart";
+import { JCUXButton } from "../../Components/JCUX/JCUXButton";
 
 const CartRedux = ({ products, clearCart, removeFromCart }) => {
-  return <h1>{JSON.stringify(products)}</h1>;
+  const [selectedProduct, setSelectedProduct] = useState(undefined);
+
+  return (
+    <>
+      <JCUXButton
+        onClick={() => {
+          removeFromCart(selectedProduct);
+        }}
+      >
+        Delete Product
+      </JCUXButton>
+      <JCUXButton>Deselect Product</JCUXButton>
+      <JCUXButton>Clear Shopping Cart</JCUXButton>
+      {products.map((product) => {
+        return (
+          <h1 onClick={() => setSelectedProduct(product.id)}>{product.name}</h1>
+        );
+      })}
+    </>
+  );
 };
 
 const mapStateToProps = (state) => {

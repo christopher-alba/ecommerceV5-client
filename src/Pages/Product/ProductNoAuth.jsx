@@ -1,12 +1,13 @@
 import React from "react";
 import { connect } from "react-redux";
 import { addToCart } from "../../Redux/actions/cart";
+import { v4 as uuidv4 } from "uuid";
 
 import ProductBody from "./ProductBody";
 const Product = ({ addToCart }) => {
   const handleAddToCart = (product, size) => {
     addToCart({
-      id: product.id,
+      id: uuidv4(),
       images: product.images,
       name: product.name,
       size: size,
