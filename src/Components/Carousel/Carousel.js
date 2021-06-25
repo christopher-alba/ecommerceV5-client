@@ -8,7 +8,7 @@ import {
 } from "./styled";
 import { Fade } from "../JCUX/JCUXFade";
 
-export const Carousel = ({ children }) => {
+export const Carousel = ({ children, height }) => {
   const [currentIndex, setCurrentIndex] = useState(0);
 
   const handlePrevClick = () => {
@@ -27,7 +27,7 @@ export const Carousel = ({ children }) => {
   };
 
   return (
-    <CarouselOuterBox>
+    <CarouselOuterBox height={height}>
       <PreviousButton onClick={handlePrevClick}>
         <i className="fas fa-chevron-left"></i>
       </PreviousButton>

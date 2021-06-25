@@ -3,17 +3,20 @@ import { connect } from "react-redux";
 import { clearCart, removeFromCart } from "../../Redux/actions/cart";
 import { JCUXButton } from "../../Components/JCUX/JCUXButton";
 import { JCUXContainer } from "../../Components/JCUX/JCUXContainer";
-import { JCUXLinkButton } from "../../Components/JCUX/JCUXLinkButton";
+import { Carousel, CarouselImage } from "../../Components/Carousel";
 import {
   ProductBoxOuter,
   ImageWrapper,
   ProductImage,
   ProductTextWrapper,
   ProductText,
-} from "../../Components/ProductBox/styled";
+  ProductsWrapper,
+  VisitButton,
+} from "./styled";
+import { Link } from "react-router-dom";
+
 const CartRedux = ({ products, clearCart, removeFromCart }) => {
   const [selectedProduct, setSelectedProduct] = useState(undefined);
-
   return (
     <JCUXContainer>
       <JCUXButton
@@ -28,23 +31,48 @@ const CartRedux = ({ products, clearCart, removeFromCart }) => {
       </JCUXButton>
       <JCUXButton onClick={() => clearCart()}>Clear Shopping Cart</JCUXButton>
 
-      {products.map((product) => {
-        const { name, price, images, id, productId } = product;
-        return (
-          <ProductBoxOuter onClick={() => setSelectedProduct(id)}>
-            <ImageWrapper>
-              <ProductImage src={images[0].url} alt="" />
-            </ImageWrapper>
-            <ProductTextWrapper>
-              <ProductText>{name}</ProductText>
-              <ProductText>NZ${price}</ProductText>
-              <JCUXLinkButton to={`/product/${productId}`}>
-                Visit
-              </JCUXLinkButton>
-            </ProductTextWrapper>
-          </ProductBoxOuter>
-        );
-      })}
+      <ProductsWrapper>
+        {products.map((product) => {
+          const {
+            name,
+            price,
+            images,
+            id,
+            productId,
+            size,
+            clothingType,
+            orientation,
+          } = product;
+          return (
+            <ProductBoxOuter
+              onClick={() => setSelectedProduct(id)}
+              style={{
+                borderColor: selectedProduct === id ? `#3477eb` : "",
+              }}
+            >
+              <Carousel height="350px">
+                {images.map((image, index) => {
+                  console.log(image);
+                  return <CarouselImage key={index} url={image.url} alt="" />;
+                })}
+              </Carousel>
+              <ProductTextWrapper>
+                <ProductText>{name}</ProductText>
+                <ProductText>{clothingType}</ProductText>
+                <ProductText>{orientation}</ProductText>
+                <ProductText>Size: {size}</ProductText>
+                <ProductText>NZ${price}</ProductText>
+                <Link to={`/product/${productId}`}>
+                  <VisitButton>Visit</VisitButton>
+                </Link>
+                <JCUXButton onClick={() => removeFromCart(id)}>
+                  Delete
+                </JCUXButton>
+              </ProductTextWrapper>
+            </ProductBoxOuter>
+          );
+        })}
+      </ProductsWrapper>
     </JCUXContainer>
   );
 };

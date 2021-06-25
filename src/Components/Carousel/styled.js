@@ -49,13 +49,25 @@ export const CarouselOuterBox = styled("div")`
   position: relative;
   user-select: none;
   overflow: hidden;
-  height: 700px;
+  height: ${({ height }) => {
+    if (height) {
+      return height;
+    } else {
+      return "700px";
+    }
+  }};
   display: flex;
   justify-content: center;
   align-items: center;
   box-shadow: 0px 2px 10px 1px ${({ theme }) => theme.colors.dropShadow};
   @media (max-width: 500px) {
-    height: 350px;
+    height: ${({ height }) => {
+      if (height) {
+        return height;
+      } else {
+        return "350px";
+      }
+    }};
   }
 `;
 
