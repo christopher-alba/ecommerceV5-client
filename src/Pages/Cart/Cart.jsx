@@ -8,10 +8,12 @@ const Cart = () => {
     return <div>loading...</div>;
   }
   if (error) {
-    return <div>{error.message}</div>;
+    if (error.message !== "Please Login Again!") {
+      return <div>ERROR: {error.message}</div>;
+    }
   }
 
-  return <h1>{JSON.stringify(data)}</h1>;
+  return <p>{JSON.stringify(data)}</p>;
 };
 
 export default Cart;
