@@ -56,6 +56,7 @@ export const GET_CART = gql`
     cart(userId: $userId) {
       products {
         id
+        productId
         name
         price
         description

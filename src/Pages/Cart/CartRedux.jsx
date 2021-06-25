@@ -9,6 +9,7 @@ const CartRedux = ({ products, clearCart, removeFromCart }) => {
       products={products}
       clearCart={clearCart}
       removeFromCart={removeFromCart}
+      type="Temporary"
     />
   );
 };

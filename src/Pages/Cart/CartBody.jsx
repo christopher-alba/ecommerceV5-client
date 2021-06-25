@@ -13,14 +13,14 @@ import {
 } from "./styled";
 import { Link } from "react-router-dom";
 
-const CartBody = ({ products, clearCart, removeFromCart }) => {
+const CartBody = ({ products, clearCart, removeFromCart, type }) => {
   const [selectedProduct, setSelectedProduct] = useState(undefined);
   const totalCost = products.reduce((accumulator, currentItem) => {
     return accumulator + currentItem.price;
   }, 0);
   return (
     <JCUXContainer>
-      <JCUXTitle>Shopping Cart</JCUXTitle>
+      <JCUXTitle>{type} Shopping Cart</JCUXTitle>
       <ButtonsWrapper>
         <JCUXButton fluid>
           Go to Checkout | Total Cost: NZ${totalCost.toFixed(2)}
