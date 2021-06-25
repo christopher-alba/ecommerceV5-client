@@ -8,6 +8,7 @@ const Product = ({ addToCart }) => {
   const handleAddToCart = (product, size) => {
     addToCart({
       id: uuidv4(),
+      productId: product.id,
       images: product.images,
       name: product.name,
       size: size,
