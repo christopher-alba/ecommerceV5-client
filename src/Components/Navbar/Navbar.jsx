@@ -26,7 +26,8 @@ import styled from "styled-components";
 import { AUTHENTICATE } from "../../ApolloClient/queries";
 import { useQuery } from "@apollo/client";
 import { JCUXButton } from "./styled";
-
+import { Icon } from "semantic-ui-react";
+import { Link } from "react-router-dom";
 const JCUXMenuButton = styled(Button)`
   box-shadow: none !important;
   width: 60px;
@@ -122,6 +123,12 @@ const NavbarDesktop = ({
               </div>
               <NavbarIcon name="moon" />
             </NavbarThemeBox>
+            <Link to="/cart" style={{ marginRight: "20px" }}>
+              <JCUXButton icon labelPosition="right">
+                NZ$0.00 <Icon name="cart" />
+              </JCUXButton>
+            </Link>
+
             {isLoggedIn() ? (
               <>
                 <div style={{ marginRight: "20px" }}>

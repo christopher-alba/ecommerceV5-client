@@ -34,6 +34,7 @@ export const NavbarBrand = styled("h1")`
     font-size: 1.5rem;
     margin-right: auto;
   }
+  white-space: nowrap;
 `;
 
 export const NavbarLinksBox = styled("div")`
