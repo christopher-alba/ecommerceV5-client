@@ -7,7 +7,7 @@ import { JCUXTitle } from "../../Components/JCUX/JCUXTitle";
 import { Carousel, CarouselImage } from "../../Components/Carousel";
 import { Select, AddToCart } from "./styled";
 import { useState } from "react";
-
+import { Icon } from "semantic-ui-react";
 const Product = () => {
   const [size, setSize] = useState(undefined);
   const id = window.location.pathname.split("/")[2];
@@ -56,7 +56,9 @@ const Product = () => {
         <JCUXTitle>{product.name}</JCUXTitle>
         <h2>{product.views} Views</h2>
         <p>{product.description}</p>
-        <h2 style={{fontWeight:"200"}}>{product.orientation} | {product.clothingType}</h2>
+        <h2 style={{ fontWeight: "200" }}>
+          {product.orientation} | {product.clothingType}
+        </h2>
         <h2>NZ${product.price}</h2>
         {outOfStock ? (
           <h4>Out of stock, we apologize for any inconvenience.</h4>
@@ -67,7 +69,10 @@ const Product = () => {
               options={sizesOptions}
               onChange={handleSizeChange}
             />
-            <AddToCart disabled={!size}> Add to cart </AddToCart>
+            <AddToCart disabled={!size} icon labelPosition="right">
+              Add to cart
+              <Icon name="cart" />
+            </AddToCart>
             {!size && (
               <h4>You must pick a size before adding product to cart.</h4>
             )}
