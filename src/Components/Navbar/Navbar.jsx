@@ -23,11 +23,12 @@ import useWindowWidth from "../../Hooks/useWindowWidth";
 import LoginModal from "../LoginModal";
 import RegisterModal from "../RegisterModal";
 import styled from "styled-components";
-import { AUTHENTICATE } from "../../ApolloClient/queries";
+import { AUTHENTICATE, GET_CART } from "../../ApolloClient/queries";
 import { useQuery } from "@apollo/client";
 import { JCUXButton } from "./styled";
 import { Icon } from "semantic-ui-react";
 import { Link } from "react-router-dom";
+import { connect } from "react-redux";
 const JCUXMenuButton = styled(Button)`
   box-shadow: none !important;
   width: 60px;
@@ -35,8 +36,26 @@ const JCUXMenuButton = styled(Button)`
   justify-content: center;
 `;
 
-const Navbar = ({ setSelectedTheme, themes, selectedTheme }) => {
+const Navbar = ({ setSelectedTheme, themes, selectedTheme, totalCost }) => {
   const { loading, error, data: authData } = useQuery(AUTHENTICATE);
+  const { data: cartData } = useQuery(GET_CART, {
+    variables: {
+      userId: authData && authData.me._id,
+    },
+  });
+  const windowWidth = useWindowWidth();
+  console.log(cartData);
+  let totalCostFinal = 0;
+
+  if (cartData && authData) {
+    totalCostFinal =
+      cartData &&
+      cartData.cart.products.reduce((accumulator, currentItem) => {
+        return accumulator + currentItem.price;
+      }, 0);
+  } else {
+    totalCostFinal = totalCost;
+  }
 
   const handleRadioChange = (evt, target) => {
     if (target.checked) {
@@ -49,7 +68,7 @@ const Navbar = ({ setSelectedTheme, themes, selectedTheme }) => {
     localStorage.removeItem("authorization");
     window.location.reload();
   };
-  const windowWidth = useWindowWidth();
+
   const isLoggedIn = () => {
     if (
       authData &&
@@ -70,6 +89,7 @@ const Navbar = ({ setSelectedTheme, themes, selectedTheme }) => {
         loading={loading}
         error={error}
         username={authData && authData.me.username}
+        totalCost={totalCostFinal}
       />
     );
   } else {
@@ -82,6 +102,7 @@ const Navbar = ({ setSelectedTheme, themes, selectedTheme }) => {
         loading={loading}
         error={error}
         username={authData && authData.me.username}
+        totalCost={totalCostFinal}
       />
     );
   }
@@ -93,6 +114,7 @@ const NavbarDesktop = ({
   isLoggedIn,
   handleSignOut,
   username,
+  totalCost,
 }) => {
   const [userDropdown, setUserDropdown] = useState(false);
   return (
@@ -126,7 +148,7 @@ const NavbarDesktop = ({
             </NavbarThemeBox>
             <Link to="/cart" style={{ marginRight: "20px" }}>
               <JCUXButton icon labelPosition="right">
-                NZ$0.00 <Icon name="cart" />
+                NZ${totalCost.toFixed(2)} <Icon name="cart" />
               </JCUXButton>
             </Link>
 
@@ -162,6 +184,7 @@ const NavbarMobile = ({
   isLoggedIn,
   handleSignOut,
   username,
+  totalCost,
 }) => {
   const [menuOn, setMenuOn] = useState(false);
   const toggleMenu = () => {
@@ -191,6 +214,7 @@ const NavbarMobile = ({
             isLoggedIn={isLoggedIn}
             handleSignOut={handleSignOut}
             username={username}
+            totalCost={totalCost}
           />
         )}
       </JCUXContainer>
@@ -204,6 +228,7 @@ const NavbarMobileMenu = ({
   isLoggedIn,
   handleSignOut,
   username,
+  totalCost,
 }) => {
   const [userDropdown, setUserDropdown] = useState(false);
   return (
@@ -236,7 +261,7 @@ const NavbarMobileMenu = ({
       <div style={{ marginTop: "20px" }}>
         <Link to="/cart">
           <JCUXButton icon labelPosition="right">
-            NZ$0.00 <Icon name="cart" />
+            NZ${totalCost.toFixed(2)} <Icon name="cart" />
           </JCUXButton>
         </Link>
       </div>
@@ -288,4 +313,12 @@ const ProfileIconAndMenu = ({ setUserDropdown, userDropdown, username }) => {
   );
 };
 
-export default Navbar;
+const mapStateToProps = (state) => {
+  return {
+    totalCost: state.cart.products.reduce((accumulator, currentIndex) => {
+      return accumulator + currentIndex.price;
+    }, 0),
+  };
+};
+
+export default connect(mapStateToProps)(Navbar);
