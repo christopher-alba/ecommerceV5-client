@@ -13,4 +13,11 @@ export const JCUXButton = styled(Button)`
   border-radius: 0px !important;
   transition: 300ms !important;
   margin-right: 0px !important;
+  width: ${({ fluid }) => {
+    if (fluid) {
+      return "100%";
+    } else {
+      return "fit-content";
+    }
+  }};
 `;

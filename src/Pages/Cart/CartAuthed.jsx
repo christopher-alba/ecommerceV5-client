@@ -1,7 +1,7 @@
 import { useQuery } from "@apollo/client";
 import React from "react";
 import { GET_CART } from "../../ApolloClient/queries";
-
+import CartBody from "./CartBody";
 const CartAuthed = ({ authData }) => {
   const { data, loading, error } = useQuery(GET_CART, {
     variables: {
@@ -16,7 +16,8 @@ const CartAuthed = ({ authData }) => {
       return <div>CART ERROR: {error.message}</div>;
     }
   }
-  return <p>{JSON.stringify(data)}</p>;
+  const { products } = data.cart;
+  return <CartBody products={products}/>;
 };
 
 export default CartAuthed;

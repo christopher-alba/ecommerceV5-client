@@ -47,10 +47,34 @@ export const ProductsWrapper = styled("div")`
     margin: 20px;
   }
   justify-content: center;
+  @media (max-width: 800px) {
+    ${ProductBoxOuter} {
+      margin: 0px;
+      margin-top: 20px;
+    }
+  }
 `;
 
 export const VisitButton = styled(JCUXButton)`
   border-right: none !important;
   position: relative;
   z-index: 1 !important;
+`;
+
+export const ButtonsWrapper = styled("div")`
+  display: flex;
+  @media (min-width: 800px) {
+    ${JCUXButton} {
+      border-right: 0px !important;
+    }
+    ${JCUXButton}:last-of-type {
+      border-right: 2px solid ${({ theme }) => theme.colors.secondary} !important;
+    }
+  }
+  @media (max-width: 800px) {
+    flex-wrap: wrap;
+    ${JCUXButton} {
+      margin-top: 20px !important;
+    }
+  }
 `;
