@@ -3,10 +3,14 @@ import React from "react";
 import { GET_PRODUCT } from "../../ApolloClient/queries";
 import { Loader } from "semantic-ui-react";
 import { JCUXContainer } from "../../Components/JCUX/JCUXContainer";
+import { JCUXTitle } from "../../Components/JCUX/JCUXTitle";
 import { Carousel, CarouselImage } from "../../Components/Carousel";
+import { Select, AddToCart } from "./styled";
+import { useState } from "react";
+
 const Product = () => {
+  const [size, setSize] = useState(undefined);
   const id = window.location.pathname.split("/")[2];
-  console.log(id);
   const { loading, error, data } = useQuery(GET_PRODUCT, {
     variables: {
       id,
@@ -24,14 +28,52 @@ const Product = () => {
     return <div>{error.message}</div>;
   }
   const product = data.product;
+  const sizesOptions = [];
+  let outOfStock = false;
+  product.sizes.forEach((sizeObject) => {
+    if (sizeObject.stock > 0) {
+      sizesOptions.push({
+        key: sizeObject.size,
+        value: sizeObject.size,
+        text: sizeObject.size + " , available: " + sizeObject.stock,
+      });
+    }
+  });
+  if (sizesOptions.length === 0) {
+    outOfStock = true;
+  }
+  const handleSizeChange = (evt, select) => {
+    setSize(select.value);
+  };
   return (
-    <div>
+    <div style={{ paddingBottom: "5%" }}>
       <Carousel>
         {product.images.map((image) => {
           return <CarouselImage url={image.url} />;
         })}
       </Carousel>
-      <JCUXContainer></JCUXContainer>
+      <JCUXContainer style={{ textAlign: "center" }}>
+        <JCUXTitle>{product.name}</JCUXTitle>
+        <h2>{product.views} Views</h2>
+        <p>{product.description}</p>
+        <h2 style={{fontWeight:"200"}}>{product.orientation} | {product.clothingType}</h2>
+        <h2>NZ${product.price}</h2>
+        {outOfStock ? (
+          <h4>Out of stock, we apologize for any inconvenience.</h4>
+        ) : (
+          <>
+            <Select
+              placeholder="Sizes"
+              options={sizesOptions}
+              onChange={handleSizeChange}
+            />
+            <AddToCart disabled={!size}> Add to cart </AddToCart>
+            {!size && (
+              <h4>You must pick a size before adding product to cart.</h4>
+            )}
+          </>
+        )}
+      </JCUXContainer>
     </div>
   );
 };

@@ -37,6 +37,7 @@ export const GET_PRODUCT = gql`
       name
       price
       description
+      views
       images {
         url
       }
