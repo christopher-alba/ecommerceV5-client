@@ -2,7 +2,7 @@ import React from "react";
 import ProductBody from "./ProductBody";
 
 const ProductAuthed = () => {
-  const handleAddToCart = () => {
+  const handleAddToCart = (product, size) => {
     console.log("ADDING TO PERSONAL CART");
   };
 

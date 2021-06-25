@@ -76,7 +76,7 @@ const ProductBody = ({ handleAddToCart, type }) => {
                 disabled={!size}
                 icon
                 labelPosition="right"
-                onClick={handleAddToCart}
+                onClick={() => handleAddToCart(product, size)}
               >
                 Add to {type} cart
                 <Icon name="cart" />
