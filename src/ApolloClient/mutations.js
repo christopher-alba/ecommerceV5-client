@@ -23,3 +23,14 @@ export const REGISTER = gql`
     }
   }
 `;
+
+export const CLEAR_CART = gql`
+  mutation ClearCart($products: [updateCartInput]!, $userId: ID!) {
+    updateCart(products: $products, userId: $userId) {
+      userId
+      products{
+        name
+      }
+    }
+  }
+`;
