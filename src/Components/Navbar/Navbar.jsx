@@ -232,6 +232,13 @@ const NavbarMobileMenu = ({
         </div>
         <NavbarIcon name="moon" />
       </NavbarThemeBox>
+      <div style={{ marginTop: "20px" }}>
+        <Link to="/cart">
+          <JCUXButton icon labelPosition="right">
+            NZ$0.00 <Icon name="cart" />
+          </JCUXButton>
+        </Link>
+      </div>
       <MenuBox2>
         {isLoggedIn() ? (
           <div style={{ display: "flex" }}>
