@@ -15,8 +15,10 @@ const CartRedux = ({ products, clearCart, removeFromCart }) => {
       >
         Delete Product
       </JCUXButton>
-      <JCUXButton>Deselect Product</JCUXButton>
-      <JCUXButton>Clear Shopping Cart</JCUXButton>
+      <JCUXButton onClick={() => setSelectedProduct(undefined)}>
+        Deselect Product
+      </JCUXButton>
+      <JCUXButton onClick={() => clearCart()}>Clear Shopping Cart</JCUXButton>
       {products.map((product) => {
         return (
           <h1 onClick={() => setSelectedProduct(product.id)}>{product.name}</h1>
