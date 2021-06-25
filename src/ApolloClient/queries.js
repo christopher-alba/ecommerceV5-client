@@ -52,8 +52,8 @@ export const GET_PRODUCT = gql`
 `;
 
 export const GET_CART = gql`
-  query GetCart($username: String!) {
-    cart(username: $username) {
+  query GetCart($userId: ID!) {
+    cart(userId: $userId) {
       products {
         id
         name
@@ -73,6 +73,7 @@ export const GET_CART = gql`
 export const AUTHENTICATE = gql`
   query Authenticate {
     me {
+      _id
       username
       password
       token
