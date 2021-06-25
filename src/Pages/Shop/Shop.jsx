@@ -1,6 +1,6 @@
 import { useQuery } from "@apollo/client";
 import React, { useEffect, useState } from "react";
-import { GET_PRODUCTS } from "../../ApolloClient/queries";
+import { AUTHENTICATE, GET_PRODUCTS } from "../../ApolloClient/queries";
 import ProductBox from "../../Components/ProductBox";
 import { Loader } from "semantic-ui-react";
 import { JCUXContainer } from "../../Components/JCUX/JCUXContainer";
@@ -12,6 +12,8 @@ import {
   FiltersWrapperOuter,
   PageControlsOuter,
   PageNumber,
+  AdminControlsWrapper,
+  AdminControlButton,
 } from "./styled";
 import { Select } from "./styled";
 import { JCUXButton } from "../../Components/JCUX/JCUXButton";
@@ -49,7 +51,7 @@ const Shop = ({
   updateFilters,
 }) => {
   const { loading, error, data } = useQuery(GET_PRODUCTS);
-
+  const { data: authData, loading: authLoading } = useQuery(AUTHENTICATE);
   const [basicFilter, setBasicFilter] = useState(basicFilterFinal);
   const [typeFilter, setTypeFilter] = useState(typeFilterFinal);
   const [orientationFilter, setOrientationFilter] = useState(
@@ -64,10 +66,10 @@ const Shop = ({
     window.scrollTo(0, 0);
   }, []);
 
-  if (loading) {
+  if (loading || authLoading) {
     return (
       <div style={{ position: "relative", height: "400px" }}>
-        <Loader active={loading}>Fetching Products</Loader>
+        <Loader active={loading}>Fetching Products and Authenticating</Loader>
       </div>
     );
   }
@@ -132,7 +134,7 @@ const Shop = ({
   const maxPageCount = Math.ceil(filteredProducts.length / 8);
 
   const slicedProducts = filteredProducts.slice(lowerCount, upperCount);
-
+  const isAdmin = authData && authData.me.permission === "ADMIN";
   const handlePrevClick = () => {
     if (lowerCount >= 8) {
       window.scrollTo(0, 0);
@@ -178,7 +180,7 @@ const Shop = ({
   };
   return (
     <JCUXContainer>
-      <JCUXTitle>WELCOME TO THE SHOP</JCUXTitle>
+      <JCUXTitle>WELCOME TO THE SHOP {isAdmin && "(ADMIN)"}</JCUXTitle>
       <FiltersWrapperOuter>
         <FiltersWrapper>
           <FiltersHeading>Filters</FiltersHeading>
@@ -203,6 +205,22 @@ const Shop = ({
         </FiltersWrapper>
         <JCUXButton onClick={handleSetFilters}>Apply Filters</JCUXButton>
       </FiltersWrapperOuter>
+      {isAdmin && (
+        <FiltersWrapperOuter>
+          <AdminControlsWrapper>
+            <FiltersHeading>Admin Controls</FiltersHeading>
+            <AdminControlButton fluid nowrap>
+              Create Product
+            </AdminControlButton>
+            <AdminControlButton fluid nowrap>
+              Update Product
+            </AdminControlButton>
+            <AdminControlButton fluid nowrap>
+              Delete Product
+            </AdminControlButton>
+          </AdminControlsWrapper>
+        </FiltersWrapperOuter>
+      )}
       <Searchbar
         setSearchString={setSearchString}
         searchToRedux={searchToRedux}

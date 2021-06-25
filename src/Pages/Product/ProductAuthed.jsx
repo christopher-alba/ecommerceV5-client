@@ -22,7 +22,7 @@ const ProductAuthed = ({ authData }) => {
     let finalProductsArray = [];
 
     data.cart.products.forEach((product) => {
-      console.log(product);
+        
       finalProductsArray.push({
         productId: product.productId,
         images: product.images.map((image) => {

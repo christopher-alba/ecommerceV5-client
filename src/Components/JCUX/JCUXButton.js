@@ -20,4 +20,9 @@ export const JCUXButton = styled(Button)`
       return "fit-content";
     }
   }};
+  ${({ nowrap }) => {
+    if (nowrap) {
+      return "white-space: nowrap;";
+    }
+  }}
 `;

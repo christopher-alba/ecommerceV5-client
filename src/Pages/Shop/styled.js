@@ -1,6 +1,7 @@
 import styled from "styled-components";
 import { ProductBoxOuter } from "../../Components/ProductBox/styled";
 import { Select as SemanticSelect } from "semantic-ui-react";
+import { JCUXButton } from "../../Components/JCUX/JCUXButton";
 
 export const ProductsWrapper = styled("div")`
   display: flex;
@@ -36,6 +37,7 @@ export const FiltersHeading = styled("h1")`
   margin-bottom: 0px;
   margin-right: 50px;
   font-weight: 200;
+  white-space: nowrap;
 `;
 
 export const FiltersWrapperOuter = styled("div")`
@@ -58,4 +60,20 @@ export const PageControlsOuter = styled("div")`
 export const PageNumber = styled("h4")`
   margin-top: 0px;
   margin-bottom: 0px;
+`;
+
+export const AdminControlsWrapper = styled("div")`
+  display: flex;
+  align-items: center;
+  @media (max-width: 1220px) {
+    flex-wrap: wrap;
+  }
+`;
+
+export const AdminControlButton = styled(JCUXButton)`
+  margin-right: 20px !important;
+  @media (max-width: 1220px) {
+    margin-top: 10px !important;
+    margin-right: 0px !important;
+  }
 `;

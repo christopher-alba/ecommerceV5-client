@@ -74,7 +74,6 @@ const Navbar = ({ setSelectedTheme, themes, selectedTheme, totalCost }) => {
       authData &&
       authData.me.token === localStorage.getItem("authorization")
     ) {
-      console.log(authData);
       return true;
     }
     return false;
