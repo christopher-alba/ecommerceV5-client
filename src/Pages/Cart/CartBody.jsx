@@ -25,17 +25,21 @@ const CartBody = ({ products, clearCart, removeFromCart, type }) => {
         <JCUXButton fluid>
           Go to Checkout | Total Cost: NZ${totalCost.toFixed(2)}
         </JCUXButton>
-        <JCUXButton
-          onClick={() => {
-            removeFromCart(selectedProduct);
-          }}
-          fluid
-        >
-          Delete Selected Product
-        </JCUXButton>
-        <JCUXButton fluid onClick={() => setSelectedProduct(undefined)}>
-          Deselect Product
-        </JCUXButton>
+        {selectedProduct && (
+          <>
+            <JCUXButton
+              onClick={() => {
+                removeFromCart(selectedProduct);
+              }}
+              fluid
+            >
+              Delete Selected Product
+            </JCUXButton>
+            <JCUXButton fluid onClick={() => setSelectedProduct(undefined)}>
+              Deselect Product
+            </JCUXButton>
+          </>
+        )}
         <JCUXButton fluid onClick={() => clearCart()}>
           Clear Shopping Cart
         </JCUXButton>
