@@ -26,6 +26,7 @@ import {
   DELETE_PRODUCT,
   UPDATE_PRODUCT,
 } from "../../ApolloClient/mutations";
+import CreateProductModal from "../../Components/CreateProductModal";
 
 const basicOptions = [
   { key: "none", value: "none", text: "none" },
@@ -188,6 +189,9 @@ const Shop = ({
   const searchToRedux = () => {
     updateSearchString(searchStringLocal);
   };
+  const handleDeselect = () => {
+    setSelectedProduct(undefined);
+  };
   const handleDeleteProduct = () => {
     deleteProduct({
       variables: {
@@ -231,11 +235,12 @@ const Shop = ({
         <FiltersWrapperOuter>
           <AdminControlsWrapper>
             <FiltersHeading>Admin Controls</FiltersHeading>
-            <AdminControlButton fluid nowrap>
-              Create Product
-            </AdminControlButton>
+            <CreateProductModal />
             {selectedProduct && (
               <>
+                <AdminControlButton fluid nowrap onClick={handleDeselect}>
+                  Deselect Product
+                </AdminControlButton>
                 <AdminControlButton fluid nowrap>
                   Update Product
                 </AdminControlButton>
