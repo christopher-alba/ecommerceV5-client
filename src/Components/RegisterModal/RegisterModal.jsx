@@ -3,6 +3,7 @@ import React, { useState, useContext } from "react";
 import { Image, Modal, Form } from "semantic-ui-react";
 import { REGISTER } from "../../ApolloClient/mutations";
 import { JCUXButton } from "../JCUX/JCUXButton";
+import { JCUXInput } from "../JCUX/JCUXInput";
 import { ThemeContext } from "styled-components";
 
 const RegisterModal = () => {
@@ -76,12 +77,12 @@ const RegisterModal = () => {
               style={{ display: "flex", flexDirection: "column" }}
             >
               <label>Username</label>
-              <input
+              <JCUXInput
                 placeholder="Username"
                 onChange={handleNameChange}
-                maxLength={20}
+                text={username}
+                charCount={20}
               />
-              <h4>Characters left: {20 - username.length}</h4>
             </Form.Input>
             <Form.Input
               error={
