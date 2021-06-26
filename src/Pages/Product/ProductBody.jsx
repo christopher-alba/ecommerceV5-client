@@ -1,4 +1,4 @@
-import { useQuery } from "@apollo/client";
+import { useMutation, useQuery } from "@apollo/client";
 import React from "react";
 import { GET_PRODUCT } from "../../ApolloClient/queries";
 import { Loader } from "semantic-ui-react";
@@ -9,6 +9,8 @@ import { Select, AddToCart } from "./styled";
 import { useState } from "react";
 import { Icon } from "semantic-ui-react";
 import { Link } from "react-router-dom";
+import { UPDATE_PRODUCT } from "../../ApolloClient/mutations";
+import { useEffect } from "react";
 
 const ProductBody = ({ handleAddToCart, type }) => {
   const [size, setSize] = useState(undefined);
@@ -18,6 +20,28 @@ const ProductBody = ({ handleAddToCart, type }) => {
       id,
     },
   });
+  const [updateProduct] = useMutation(UPDATE_PRODUCT);
+
+  useEffect(() => {
+    updateProduct({
+      variables: {
+        product: {
+          id: id,
+          views: data && data.product.views + 1,
+        },
+      },
+      refetchQueries: [
+        {
+          query: GET_PRODUCT,
+          variables: {
+            id: id,
+          },
+        },
+      ],
+    });
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
   if (loading) {
     return (
       <div style={{ position: "relative", height: "400px" }}>

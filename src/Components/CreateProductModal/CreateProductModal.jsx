@@ -184,6 +184,7 @@ const CreateProductModal = () => {
           },
         ],
       });
+      setOpen(false);
     } else {
       if (!name) {
         setNameError(true);
