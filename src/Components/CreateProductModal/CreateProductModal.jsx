@@ -19,7 +19,9 @@ const CreateProductModal = () => {
   const [price, setPrice] = useState(undefined);
   const [description, setDescription] = useState(undefined);
 
-  const handleSubmit = () => {};
+  const handleSubmit = () => {
+    console.log("submitting form");
+  };
   const handleNameChange = (evt) => {
     setName(evt.target.value);
   };
@@ -44,7 +46,7 @@ const CreateProductModal = () => {
       <Modal.Header>Create Product</Modal.Header>
       <Modal.Content>
         <Modal.Description style={{ width: "100%" }}>
-          <Form onSubmit={handleSubmit}>
+          <Form onSubmit={handleSubmit} id="createProductForm">
             <Form.Input style={{ display: "flex", flexDirection: "column" }}>
               <label>Name</label>
               <JCUXInput
@@ -77,12 +79,14 @@ const CreateProductModal = () => {
                 rows={4}
               />
             </Form.Input>
-            <JCUXButton type="submit">Submit</JCUXButton>
           </Form>
         </Modal.Description>
       </Modal.Content>
       <Modal.Actions>
         <JCUXButton onClick={() => setOpen(false)}>Cancel</JCUXButton>
+        <JCUXButton type="submit" form="createProductForm">
+          Submit
+        </JCUXButton>
       </Modal.Actions>
     </Modal>
   );
