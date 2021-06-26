@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { Modal, Form } from "semantic-ui-react";
 import { JCUXButton } from "../JCUX/JCUXButton";
 import { JCUXTextArea } from "../JCUX/JCUXTextArea";
+import { JCUXInput } from "../JCUX/JCUXInput";
 import styled from "styled-components";
 
 const TriggerButton = styled(JCUXButton)`
@@ -46,7 +47,12 @@ const CreateProductModal = () => {
           <Form onSubmit={handleSubmit}>
             <Form.Input style={{ display: "flex", flexDirection: "column" }}>
               <label>Name</label>
-              <input placeholder="Name" onChange={handleNameChange} />
+              <JCUXInput
+                placeholder="Name"
+                onChange={handleNameChange}
+                charCount={50}
+                text={name}
+              />
             </Form.Input>
             <Form.Input style={{ display: "flex", flexDirection: "column" }}>
               <label>Price</label>
@@ -68,6 +74,7 @@ const CreateProductModal = () => {
                 onChange={handleDescriptionChange}
                 charCount={1000}
                 text={description}
+                rows={4}
               />
             </Form.Input>
             <JCUXButton type="submit">Submit</JCUXButton>
