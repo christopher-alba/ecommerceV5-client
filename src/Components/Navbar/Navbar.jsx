@@ -44,7 +44,6 @@ const Navbar = ({ setSelectedTheme, themes, selectedTheme, totalCost }) => {
     },
   });
   const windowWidth = useWindowWidth();
-  console.log(cartData);
   let totalCostFinal = 0;
 
   if (cartData && authData) {

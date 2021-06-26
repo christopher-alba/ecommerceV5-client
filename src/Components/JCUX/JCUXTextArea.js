@@ -14,6 +14,7 @@ export const JCUXTextArea = ({
   text,
   placeholder,
   rows,
+  defaultValue,
 }) => {
   return (
     <>
@@ -22,6 +23,7 @@ export const JCUXTextArea = ({
         onChange={onChange}
         maxLength={charCount}
         rows={(rows = 4)}
+        defaultValue={defaultValue}
       />
       {text && (
         <CharCount>Characters Left | {charCount - text.length}</CharCount>

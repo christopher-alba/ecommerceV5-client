@@ -23,6 +23,7 @@ import AdminProductBox from "../../Components/AdminProductBox/AdminProductBox";
 import { connect } from "react-redux";
 import { DELETE_PRODUCT } from "../../ApolloClient/mutations";
 import CreateProductModal from "../../Components/CreateProductModal";
+import UpdateProductModal from "../../Components/UpdateProductModal/UpdateProductModal";
 
 const basicOptions = [
   { key: "none", value: "none", text: "none" },
@@ -235,9 +236,7 @@ const Shop = ({
                 <AdminControlButton fluid nowrap onClick={handleDeselect}>
                   Deselect Product
                 </AdminControlButton>
-                <AdminControlButton fluid nowrap>
-                  Update Product
-                </AdminControlButton>
+                <UpdateProductModal productId={selectedProduct} />
                 <AdminControlButton fluid nowrap onClick={handleDeleteProduct}>
                   Delete Product
                 </AdminControlButton>

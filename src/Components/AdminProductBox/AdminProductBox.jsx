@@ -13,8 +13,11 @@ const AdminProductBox = ({ product, setSelectedProduct, selectedProduct }) => {
   const { name, price, images, id } = product;
   return (
     <ProductBoxOuter
-      onClick={() => {
-        setSelectedProduct(id);
+      onClick={async () => {
+        await setSelectedProduct(undefined);
+        await setTimeout(() => {
+          setSelectedProduct(id);
+        }, 300);
       }}
       style={{ borderColor: selectedProduct === id ? `#3477eb` : "" }}
     >

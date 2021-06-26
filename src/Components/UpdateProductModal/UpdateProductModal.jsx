@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Modal, Form } from "semantic-ui-react";
 import { JCUXButton } from "../JCUX/JCUXButton";
 import { JCUXTextArea } from "../JCUX/JCUXTextArea";
@@ -6,9 +6,9 @@ import { JCUXInput } from "../JCUX/JCUXInput";
 import { JCUXUploadImage } from "../JCUX/JCUXUploadImage";
 import styled from "styled-components";
 import { Dropdown } from "semantic-ui-react";
-import { useMutation } from "@apollo/client";
-import { CREATE_PRODUCT } from "../../ApolloClient/mutations";
-import { GET_PRODUCTS } from "../../ApolloClient/queries";
+import { useMutation, useQuery } from "@apollo/client";
+import { UPDATE_PRODUCT } from "../../ApolloClient/mutations";
+import { GET_PRODUCT, GET_PRODUCTS } from "../../ApolloClient/queries";
 
 const TriggerButton = styled(JCUXButton)`
   margin-right: 20px !important;
@@ -111,34 +111,59 @@ const sizesArray = [
     value: "XL6",
   },
 ];
-const CreateProductModal = () => {
-  const [createProduct] = useMutation(CREATE_PRODUCT);
+const UpdateProductModal = ({ productId }) => {
+  const { data, loading, error } = useQuery(GET_PRODUCT, {
+    variables: {
+      id: productId,
+    },
+  });
+  const product = data && data.product;
+  const productImages =
+    data &&
+    data.product.images.map((imageObj) => {
+      return {
+        url: imageObj.url,
+      };
+    });
+  const [updateProduct] = useMutation(UPDATE_PRODUCT);
+
+  useEffect(() => {}, [productId]);
   const [open, setOpen] = useState(false);
 
-  const [name, setName] = useState(undefined);
+  const [name, setName] = useState(product && product.name);
   const [nameError, setNameError] = useState(false);
 
-  const [price, setPrice] = useState(undefined);
+  const [price, setPrice] = useState(product && product.price);
   const [priceError, setPriceError] = useState(false);
 
-  const [description, setDescription] = useState(undefined);
+  const [description, setDescription] = useState(
+    product && product.description
+  );
   const [descriptionError, setDescriptionError] = useState(false);
 
-  const [type, setType] = useState(undefined);
+  const [type, setType] = useState(product && product.clothingType);
   const [typeError, setTypeError] = useState(false);
 
-  const [orientation, setOrientation] = useState(undefined);
+  const [orientation, setOrientation] = useState(
+    product && product.orientation
+  );
   const [orientationError, setOrientationError] = useState(false);
 
-  const [sizes, setSizes] = useState(undefined);
+  const [sizes, setSizes] = useState(product && product.sizes);
   const [sizesError, setSizesError] = useState(false);
 
-  const [image1, setImage1] = useState(undefined);
+  const [image1, setImage1] = useState(
+    product && productImages && productImages[0]
+  );
   const [image1Error, setImage1Error] = useState(false);
 
-  const [image2, setImage2] = useState(undefined);
+  const [image2, setImage2] = useState(
+    product && productImages && productImages[1]
+  );
 
-  const [image3, setImage3] = useState(undefined);
+  const [image3, setImage3] = useState(
+    product && productImages && productImages[2]
+  );
 
   const getImageArray = (img1, img2, img3) => {
     let imagesArray = [];
@@ -166,9 +191,10 @@ const CreateProductModal = () => {
       sizes.length > 0 &&
       image1
     ) {
-      createProduct({
+      updateProduct({
         variables: {
           product: {
+            id: productId,
             name,
             price: Number(price),
             description,
@@ -184,6 +210,8 @@ const CreateProductModal = () => {
           },
         ],
       });
+      setOpen(false);
+      window.location.reload();
     } else {
       if (!name) {
         setNameError(true);
@@ -253,6 +281,14 @@ const CreateProductModal = () => {
       })
     );
   };
+
+  if (loading) {
+    return <div>loading...</div>;
+  }
+  if (error) {
+    return <div>Error: {error.message}</div>;
+  }
+
   return (
     <Modal
       open={open}
@@ -260,11 +296,11 @@ const CreateProductModal = () => {
       onOpen={() => setOpen(true)}
       trigger={
         <TriggerButton fluid nowrap>
-          Create product
+          Update product
         </TriggerButton>
       }
     >
-      <Modal.Header>Create Product</Modal.Header>
+      <Modal.Header>Update Product</Modal.Header>
       <Modal.Content image>
         <Modal.Description style={{ width: "100%" }}>
           <Form onSubmit={handleSubmit} id="createProductForm">
@@ -284,6 +320,7 @@ const CreateProductModal = () => {
                 onChange={handleNameChange}
                 charCount={50}
                 text={name}
+                defaultValue={product.name}
               />
             </Form.Input>
             <Form.Input
@@ -307,6 +344,7 @@ const CreateProductModal = () => {
                     evt.preventDefault();
                   }
                 }}
+                defaultValue={product.price}
               />
             </Form.Input>
             <Form.Input
@@ -326,6 +364,7 @@ const CreateProductModal = () => {
                 charCount={1000}
                 text={description}
                 rows={4}
+                defaultValue={product.description}
               />
             </Form.Input>
             <Form.Input
@@ -344,6 +383,7 @@ const CreateProductModal = () => {
                 placeholder="Clothing Type"
                 options={clothingTypes}
                 onChange={handleTypeChange}
+                defaultValue={product.clothingType}
               />
             </Form.Input>
             <Form.Input
@@ -362,6 +402,7 @@ const CreateProductModal = () => {
                 placeholder="Orientation"
                 options={orientations}
                 onChange={handleOrientationChange}
+                defaultValue={product.orientation}
               />
             </Form.Input>
             <Form.Input
@@ -382,6 +423,9 @@ const CreateProductModal = () => {
                 selection
                 options={sizesArray}
                 onChange={handleSizesChange}
+                defaultValue={product.sizes.map((sizeObj) => {
+                  return sizeObj.size;
+                })}
               />
               {sizes &&
                 sizes.map((sizeObj, index) => {
@@ -453,4 +497,4 @@ const CreateProductModal = () => {
   );
 };
 
-export default CreateProductModal;
+export default UpdateProductModal;
