@@ -8,15 +8,17 @@ const Searchbar = ({
   setUpperCount,
   setLowerCount,
   searchString,
+  setCurrentPage,
 }) => {
   const handleEnterPress = (evt) => {
     if (evt.charCode === 13) {
       let button = document.getElementsByClassName("hero-search-submit")[0];
       if (searchToRedux) {
         searchToRedux();
-        if (setUpperCount && setLowerCount) {
+        if (setUpperCount && setLowerCount && setCurrentPage) {
           setUpperCount(8);
           setLowerCount(0);
+          setCurrentPage(1);
         }
       }
       button.click();
@@ -27,9 +29,10 @@ const Searchbar = ({
   };
   const handleSubmitClick = () => {
     searchToRedux();
-    if (setUpperCount && setLowerCount) {
+    if (setUpperCount && setLowerCount && setCurrentPage) {
       setUpperCount(8);
       setLowerCount(0);
+      setCurrentPage(1);
     }
   };
   return (

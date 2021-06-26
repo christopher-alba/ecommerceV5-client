@@ -250,6 +250,7 @@ const Shop = ({
         searchToRedux={searchToRedux}
         setLowerCount={setLowerCount}
         setUpperCount={setUpperCount}
+        setCurrentPage={setCurrentPage}
       />
       <PageControlsOuter>
         <JCUXButton disabled={lowerCount < 8} onClick={handlePrevClick}>
