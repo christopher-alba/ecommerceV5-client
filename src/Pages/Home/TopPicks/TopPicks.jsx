@@ -16,7 +16,7 @@ const TopPicks = () => {
   const { loading, error, data } = useQuery(GET_TOP_PICKS);
   useEffect(() => {
     // makes top picks drag to scroll
-    if (!loading) {
+    if (!loading && !error && data) {
       const slider = document.querySelector(".top-picks-main-wrapper");
       let mouseDown = false;
       let startX, scrollLeft;
@@ -49,7 +49,7 @@ const TopPicks = () => {
       slider.addEventListener("mouseup", stopDragging, false);
       slider.addEventListener("mouseleave", stopDragging, false);
     }
-  }, [loading]);
+  }, [loading, error, data]);
   const onLeftArrowClick = () => {
     const topPicks = document.getElementsByClassName(
       "top-picks-main-wrapper"
