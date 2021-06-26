@@ -9,7 +9,6 @@ import { Dropdown } from "semantic-ui-react";
 import { useMutation, useQuery } from "@apollo/client";
 import { UPDATE_PRODUCT } from "../../ApolloClient/mutations";
 import { GET_PRODUCT, GET_PRODUCTS } from "../../ApolloClient/queries";
-import { Loader } from "semantic-ui-react";
 
 const TriggerButton = styled(JCUXButton)`
   margin-right: 20px !important;
@@ -283,13 +282,6 @@ const UpdateProductModal = ({ productId }) => {
     );
   };
 
-  if (loading) {
-    return (
-      <div style={{ position: "relative", height: "400px" }}>
-        <Loader active={loading}>Fetching Product</Loader>
-      </div>
-    );
-  }
   if (error) {
     return <div>Error: {error.message}</div>;
   }
@@ -300,7 +292,7 @@ const UpdateProductModal = ({ productId }) => {
       onClose={() => setOpen(false)}
       onOpen={() => setOpen(true)}
       trigger={
-        <TriggerButton fluid nowrap>
+        <TriggerButton loading={loading} disabled={loading} fluid nowrap>
           Update product
         </TriggerButton>
       }
@@ -325,7 +317,7 @@ const UpdateProductModal = ({ productId }) => {
                 onChange={handleNameChange}
                 charCount={50}
                 text={name}
-                defaultValue={product.name}
+                defaultValue={product && product.name}
               />
             </Form.Input>
             <Form.Input
@@ -349,7 +341,7 @@ const UpdateProductModal = ({ productId }) => {
                     evt.preventDefault();
                   }
                 }}
-                defaultValue={product.price}
+                defaultValue={product && product.price}
               />
             </Form.Input>
             <Form.Input
@@ -369,7 +361,7 @@ const UpdateProductModal = ({ productId }) => {
                 charCount={1000}
                 text={description}
                 rows={4}
-                defaultValue={product.description}
+                defaultValue={product && product.description}
               />
             </Form.Input>
             <Form.Input
@@ -388,7 +380,7 @@ const UpdateProductModal = ({ productId }) => {
                 placeholder="Clothing Type"
                 options={clothingTypes}
                 onChange={handleTypeChange}
-                defaultValue={product.clothingType}
+                defaultValue={product && product.clothingType}
               />
             </Form.Input>
             <Form.Input
@@ -407,7 +399,7 @@ const UpdateProductModal = ({ productId }) => {
                 placeholder="Orientation"
                 options={orientations}
                 onChange={handleOrientationChange}
-                defaultValue={product.orientation}
+                defaultValue={product && product.orientation}
               />
             </Form.Input>
             <Form.Input
@@ -428,9 +420,12 @@ const UpdateProductModal = ({ productId }) => {
                 selection
                 options={sizesArray}
                 onChange={handleSizesChange}
-                defaultValue={product.sizes.map((sizeObj) => {
-                  return sizeObj.size;
-                })}
+                defaultValue={
+                  product &&
+                  product.sizes.map((sizeObj) => {
+                    return sizeObj.size;
+                  })
+                }
               />
               {sizes &&
                 sizes.map((sizeObj, index) => {
