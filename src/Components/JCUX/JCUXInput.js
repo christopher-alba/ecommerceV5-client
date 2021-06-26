@@ -6,10 +6,14 @@ const CharCount = styled("p")`
   text-align: right;
 `;
 
-export const JCUXInput = ({ onChange, text, charCount }) => {
+export const JCUXInput = ({ onChange, text, charCount, placeholder }) => {
   return (
     <>
-      <input placeholder="Username" onChange={onChange} maxLength={charCount} />
+      <input
+        placeholder={placeholder}
+        onChange={onChange}
+        maxLength={charCount}
+      />
       {text && text.length > 0 && (
         <CharCount>Characters left | {charCount - text.length}</CharCount>
       )}

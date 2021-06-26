@@ -6,11 +6,11 @@ const CharCount = styled("p")`
   text-align: right;
 `;
 
-export const JCUXTextArea = ({ onChange, charCount, text }) => {
+export const JCUXTextArea = ({ onChange, charCount, text, placeholder }) => {
   return (
     <>
       <textarea
-        placeholder="Description"
+        placeholder={placeholder}
         onChange={onChange}
         maxLength={charCount}
       />
