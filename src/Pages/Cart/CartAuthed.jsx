@@ -3,6 +3,7 @@ import React from "react";
 import { CLEAR_CART, UPDATE_CART } from "../../ApolloClient/mutations";
 import { GET_CART } from "../../ApolloClient/queries";
 import CartBody from "./CartBody";
+import { Loader } from "semantic-ui-react";
 
 const CartAuthed = ({ authData }) => {
   const { data, loading, error } = useQuery(GET_CART, {
@@ -13,7 +14,11 @@ const CartAuthed = ({ authData }) => {
   const [clearCartMutation] = useMutation(CLEAR_CART);
   const [updateCartMutation] = useMutation(UPDATE_CART);
   if (loading) {
-    return <div>loading...</div>;
+    return (
+      <div style={{ position: "relative", height: "400px" }}>
+        <Loader active={loading}>Fetching Top Picks</Loader>
+      </div>
+    );
   }
   if (error) {
     if (error.message !== "Please Login Again!") {

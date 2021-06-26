@@ -3,11 +3,15 @@ import React from "react";
 import { AUTHENTICATE } from "../../ApolloClient/queries";
 import ProductNoAuth from "./ProductNoAuth";
 import ProductAuthed from "./ProductAuthed";
-
+import { Loader } from "semantic-ui-react";
 const AuthWrapper = () => {
   const { data, loading, error } = useQuery(AUTHENTICATE);
   if (loading) {
-    return <div>loading...</div>;
+    return (
+      <div style={{ position: "relative", height: "400px" }}>
+        <Loader active={loading}>Fetching Top Picks</Loader>
+      </div>
+    );
   }
   if (error) {
     if (error.message !== "Please Login Again!") {

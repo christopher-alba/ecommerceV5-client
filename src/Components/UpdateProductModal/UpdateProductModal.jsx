@@ -9,6 +9,7 @@ import { Dropdown } from "semantic-ui-react";
 import { useMutation, useQuery } from "@apollo/client";
 import { UPDATE_PRODUCT } from "../../ApolloClient/mutations";
 import { GET_PRODUCT, GET_PRODUCTS } from "../../ApolloClient/queries";
+import { Loader } from "semantic-ui-react";
 
 const TriggerButton = styled(JCUXButton)`
   margin-right: 20px !important;
@@ -283,7 +284,11 @@ const UpdateProductModal = ({ productId }) => {
   };
 
   if (loading) {
-    return <div>loading...</div>;
+    return (
+      <div style={{ position: "relative", height: "400px" }}>
+        <Loader active={loading}>Fetching Top Picks</Loader>
+      </div>
+    );
   }
   if (error) {
     return <div>Error: {error.message}</div>;

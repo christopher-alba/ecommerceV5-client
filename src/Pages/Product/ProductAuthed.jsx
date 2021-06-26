@@ -3,7 +3,7 @@ import React from "react";
 import { GET_CART } from "../../ApolloClient/queries";
 import ProductBody from "./ProductBody";
 import { UPDATE_CART } from "../../ApolloClient/mutations";
-
+import { Loader } from "semantic-ui-react";
 const ProductAuthed = ({ authData }) => {
   const { data, loading, error } = useQuery(GET_CART, {
     variables: {
@@ -12,7 +12,11 @@ const ProductAuthed = ({ authData }) => {
   });
   const [updateCart] = useMutation(UPDATE_CART);
   if (loading) {
-    return <div>loading...</div>;
+    return (
+      <div style={{ position: "relative", height: "400px" }}>
+        <Loader active={loading}>Fetching Top Picks</Loader>
+      </div>
+    );
   }
   if (error) {
     return <div>{error.message}</div>;
@@ -22,7 +26,6 @@ const ProductAuthed = ({ authData }) => {
     let finalProductsArray = [];
 
     data.cart.products.forEach((product) => {
-        
       finalProductsArray.push({
         productId: product.productId,
         images: product.images.map((image) => {
