@@ -3,6 +3,7 @@ import { Modal, Form, Image } from "semantic-ui-react";
 import { JCUXButton } from "../JCUX/JCUXButton";
 import { JCUXTextArea } from "../JCUX/JCUXTextArea";
 import { JCUXInput } from "../JCUX/JCUXInput";
+import { JCUXUploadImage } from "../JCUX/JCUXUploadImage";
 import styled from "styled-components";
 import { Dropdown } from "semantic-ui-react";
 
@@ -14,17 +15,7 @@ const TriggerButton = styled(JCUXButton)`
   }
 `;
 
-const StyledImage = styled(Image)`
-  height: 100%;
-  width: auto;
-  object-fit: cover;
-`;
 
-const FileDisplayArea = styled("div")`
-  height: 100px;
-  width: 100px;
-  margin-top: 15px;
-`;
 
 const clothingTypes = [
   {
@@ -272,35 +263,7 @@ const CreateProductModal = () => {
             </Form.Input>
             <Form.Input>
               <div>
-                <input
-                  type="file"
-                  variant="outlined"
-                  style={{ width: "100%" }}
-                  onChange={(evt) => {
-                    const file = evt.target.files[0];
-
-                    var imageType = /image.*/;
-
-                    if (file && file.type.match(imageType)) {
-                      var reader = new FileReader();
-                      reader.onload = function (e) {
-                        setImage1({ url: reader.result });
-                      };
-
-                      reader.readAsDataURL(file);
-                    } else {
-                      setImage1(undefined);
-                    }
-                  }}
-                />
-                {image1 && (
-                  <FileDisplayArea>
-                    <StyledImage
-                      src={image1 && image1.url}
-                      className="image1"
-                    />
-                  </FileDisplayArea>
-                )}
+                <JCUXUploadImage setImage={setImage1} image={image1} />
               </div>
             </Form.Input>
           </Form>
