@@ -1,11 +1,14 @@
 import React, { useState } from "react";
-import { Modal, Form, Image } from "semantic-ui-react";
+import { Modal, Form } from "semantic-ui-react";
 import { JCUXButton } from "../JCUX/JCUXButton";
 import { JCUXTextArea } from "../JCUX/JCUXTextArea";
 import { JCUXInput } from "../JCUX/JCUXInput";
 import { JCUXUploadImage } from "../JCUX/JCUXUploadImage";
 import styled from "styled-components";
 import { Dropdown } from "semantic-ui-react";
+import { useMutation } from "@apollo/client";
+import { CREATE_PRODUCT } from "../../ApolloClient/mutations";
+import { GET_PRODUCTS } from "../../ApolloClient/queries";
 
 const TriggerButton = styled(JCUXButton)`
   margin-right: 20px !important;
@@ -14,8 +17,6 @@ const TriggerButton = styled(JCUXButton)`
     margin-top: 10px !important;
   }
 `;
-
-
 
 const clothingTypes = [
   {
@@ -111,6 +112,7 @@ const sizesArray = [
   },
 ];
 const CreateProductModal = () => {
+  const [createProduct] = useMutation(CREATE_PRODUCT);
   const [open, setOpen] = useState(false);
   const [name, setName] = useState(undefined);
   const [price, setPrice] = useState(undefined);
@@ -119,9 +121,47 @@ const CreateProductModal = () => {
   const [orientation, setOrientation] = useState(undefined);
   const [sizes, setSizes] = useState(undefined);
   const [image1, setImage1] = useState(undefined);
+  const [image2, setImage2] = useState(undefined);
+  const [image3, setImage3] = useState(undefined);
+
+  const getImageArray = (img1, img2, img3) => {
+    let imagesArray = [];
+    if (img1) {
+      imagesArray.push(img1);
+    }
+    if (img2) {
+      imagesArray.push(img2);
+    }
+    if (img3) {
+      imagesArray.push(img3);
+    }
+    return imagesArray;
+  };
 
   const handleSubmit = () => {
     console.log("submitting form");
+    try {
+      createProduct({
+        variables: {
+          product: {
+            name,
+            price: Number(price),
+            description,
+            clothingType: type,
+            orientation,
+            images: getImageArray(image1, image2, image3),
+            sizes,
+          },
+        },
+        refetchQueries: [
+          {
+            query: GET_PRODUCTS,
+          },
+        ],
+      });
+    } catch (err) {
+      console.log(err);
+    }
   };
   const handleNameChange = (evt) => {
     setName(evt.target.value);
@@ -161,7 +201,6 @@ const CreateProductModal = () => {
         }
       })
     );
-    console.log(sizes);
   };
   return (
     <Modal
@@ -263,7 +302,18 @@ const CreateProductModal = () => {
             </Form.Input>
             <Form.Input>
               <div>
+                <p style={{ marginBottom: "5px", marginTop: "10px" }}>
+                  Image 1 (compulsary upload)
+                </p>
                 <JCUXUploadImage setImage={setImage1} image={image1} />
+                <p style={{ marginBottom: "5px", marginTop: "10px" }}>
+                  Image 2
+                </p>
+                <JCUXUploadImage setImage={setImage2} image={image2} />
+                <p style={{ marginBottom: "5px", marginTop: "10px" }}>
+                  Image 3
+                </p>
+                <JCUXUploadImage setImage={setImage3} image={image3} />
               </div>
             </Form.Input>
           </Form>

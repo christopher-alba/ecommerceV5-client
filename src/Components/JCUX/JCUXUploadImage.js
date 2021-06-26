@@ -1,6 +1,6 @@
 import React from "react";
 import styled from "styled-components";
-import {Image } from "semantic-ui-react";
+import { Image } from "semantic-ui-react";
 const StyledImage = styled(Image)`
   height: 100%;
   width: auto;

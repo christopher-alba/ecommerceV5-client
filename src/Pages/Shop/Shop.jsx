@@ -21,11 +21,7 @@ import Searchbar from "../../Components/Searchbar";
 import { updateFilters, updateSearchString } from "../../Redux/actions/shop";
 import AdminProductBox from "../../Components/AdminProductBox/AdminProductBox";
 import { connect } from "react-redux";
-import {
-  CREATE_PRODUCT,
-  DELETE_PRODUCT,
-  UPDATE_PRODUCT,
-} from "../../ApolloClient/mutations";
+import { DELETE_PRODUCT } from "../../ApolloClient/mutations";
 import CreateProductModal from "../../Components/CreateProductModal";
 
 const basicOptions = [
@@ -59,8 +55,6 @@ const Shop = ({
 }) => {
   const { loading, error, data } = useQuery(GET_PRODUCTS);
   const { data: authData, loading: authLoading } = useQuery(AUTHENTICATE);
-  const [createProduct] = useMutation(CREATE_PRODUCT);
-  const [updateProduct] = useMutation(UPDATE_PRODUCT);
   const [deleteProduct] = useMutation(DELETE_PRODUCT);
   const [basicFilter, setBasicFilter] = useState(basicFilterFinal);
   const [typeFilter, setTypeFilter] = useState(typeFilterFinal);
