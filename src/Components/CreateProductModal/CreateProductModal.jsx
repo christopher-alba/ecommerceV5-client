@@ -114,14 +114,30 @@ const sizesArray = [
 const CreateProductModal = () => {
   const [createProduct] = useMutation(CREATE_PRODUCT);
   const [open, setOpen] = useState(false);
+
   const [name, setName] = useState(undefined);
+  const [nameError, setNameError] = useState(false);
+
   const [price, setPrice] = useState(undefined);
+  const [priceError, setPriceError] = useState(false);
+
   const [description, setDescription] = useState(undefined);
+  const [descriptionError, setDescriptionError] = useState(false);
+
   const [type, setType] = useState(undefined);
+  const [typeError, setTypeError] = useState(false);
+
   const [orientation, setOrientation] = useState(undefined);
+  const [orientationError, setOrientationError] = useState(false);
+
   const [sizes, setSizes] = useState(undefined);
+  const [sizesError, setSizesError] = useState(false);
+
   const [image1, setImage1] = useState(undefined);
+  const [image1Error, setImage1Error] = useState(false);
+
   const [image2, setImage2] = useState(undefined);
+
   const [image3, setImage3] = useState(undefined);
 
   const getImageArray = (img1, img2, img3) => {
@@ -140,7 +156,16 @@ const CreateProductModal = () => {
 
   const handleSubmit = () => {
     console.log("submitting form");
-    try {
+    if (
+      name &&
+      price &&
+      description &&
+      type &&
+      orientation &&
+      sizes &&
+      sizes.length > 0 &&
+      image1
+    ) {
       createProduct({
         variables: {
           product: {
@@ -159,24 +184,49 @@ const CreateProductModal = () => {
           },
         ],
       });
-    } catch (err) {
-      console.log(err);
+    } else {
+      if (!name) {
+        setNameError(true);
+      }
+      if (!price) {
+        setPriceError(true);
+      }
+      if (!description) {
+        setDescriptionError(true);
+      }
+      if (!type) {
+        setTypeError(true);
+      }
+      if (!orientation) {
+        setOrientationError(true);
+      }
+      if (!sizes || sizes.length === 0) {
+        setSizesError(true);
+      }
+      if (!image1) {
+        setImage1Error(true);
+      }
     }
   };
   const handleNameChange = (evt) => {
     setName(evt.target.value);
+    setNameError(false);
   };
   const handlePriceChange = (evt) => {
     setPrice(evt.target.value);
+    setPriceError(false);
   };
   const handleDescriptionChange = (evt) => {
     setDescription(evt.target.value);
+    setDescriptionError(false);
   };
   const handleTypeChange = (evt, dropdown) => {
     setType(dropdown.value);
+    setTypeError(false);
   };
   const handleOrientationChange = (evt, dropdown) => {
     setOrientation(dropdown.value);
+    setOrientationError(false);
   };
   const handleSizesChange = (evt, dropdown) => {
     setSizes(
@@ -187,6 +237,7 @@ const CreateProductModal = () => {
         };
       })
     );
+    setSizesError(false);
   };
   const handleStockChange = (index, evt) => {
     setSizes(
@@ -217,7 +268,16 @@ const CreateProductModal = () => {
       <Modal.Content image>
         <Modal.Description style={{ width: "100%" }}>
           <Form onSubmit={handleSubmit} id="createProductForm">
-            <Form.Input style={{ display: "flex", flexDirection: "column" }}>
+            <Form.Input
+              style={{ display: "flex", flexDirection: "column" }}
+              error={
+                nameError
+                  ? {
+                      content: "You must enter a product's name",
+                    }
+                  : false
+              }
+            >
               <label>Name</label>
               <JCUXInput
                 placeholder="Name"
@@ -226,7 +286,16 @@ const CreateProductModal = () => {
                 text={name}
               />
             </Form.Input>
-            <Form.Input style={{ display: "flex", flexDirection: "column" }}>
+            <Form.Input
+              style={{ display: "flex", flexDirection: "column" }}
+              error={
+                priceError
+                  ? {
+                      content: "You must enter a product's price",
+                    }
+                  : false
+              }
+            >
               <label>Price</label>
               <input
                 type="number"
@@ -239,7 +308,16 @@ const CreateProductModal = () => {
                 }}
               />
             </Form.Input>
-            <Form.Input style={{ display: "flex", flexDirection: "column" }}>
+            <Form.Input
+              style={{ display: "flex", flexDirection: "column" }}
+              error={
+                descriptionError
+                  ? {
+                      content: "You must enter a product's description",
+                    }
+                  : false
+              }
+            >
               <label>Description</label>
               <JCUXTextArea
                 placeholder="Description"
@@ -249,7 +327,16 @@ const CreateProductModal = () => {
                 rows={4}
               />
             </Form.Input>
-            <Form.Input style={{ display: "flex", flexDirection: "column" }}>
+            <Form.Input
+              style={{ display: "flex", flexDirection: "column" }}
+              error={
+                typeError
+                  ? {
+                      content: "You must choose a product's clothing type",
+                    }
+                  : false
+              }
+            >
               <label>Clothing Type</label>
               <Dropdown
                 selection
@@ -258,7 +345,16 @@ const CreateProductModal = () => {
                 onChange={handleTypeChange}
               />
             </Form.Input>
-            <Form.Input style={{ display: "flex", flexDirection: "column" }}>
+            <Form.Input
+              style={{ display: "flex", flexDirection: "column" }}
+              error={
+                orientationError
+                  ? {
+                      content: "You must choose a product's orientation",
+                    }
+                  : false
+              }
+            >
               <label>Orientation</label>
               <Dropdown
                 selection
@@ -267,7 +363,16 @@ const CreateProductModal = () => {
                 onChange={handleOrientationChange}
               />
             </Form.Input>
-            <Form.Input style={{ display: "flex", flexDirection: "column" }}>
+            <Form.Input
+              style={{ display: "flex", flexDirection: "column" }}
+              error={
+                sizesError
+                  ? {
+                      content: "You must choose a product's sizes and stock",
+                    }
+                  : false
+              }
+            >
               <label>Sizes</label>
               <Dropdown
                 placeholder="Sizes"
@@ -300,22 +405,40 @@ const CreateProductModal = () => {
                   );
                 })}
             </Form.Input>
-            <Form.Input>
-              <div>
-                <p style={{ marginBottom: "5px", marginTop: "10px" }}>
+
+            <div>
+              <Form.Input
+                style={{ display: "flex", flexDirection: "column" }}
+                error={
+                  image1Error
+                    ? {
+                        content: "You must choose a product's first image.",
+                      }
+                    : false
+                }
+              >
+                <label style={{ marginBottom: "5px", marginTop: "10px" }}>
                   Image 1 (compulsary upload)
-                </p>
-                <JCUXUploadImage setImage={setImage1} image={image1} />
-                <p style={{ marginBottom: "5px", marginTop: "10px" }}>
+                </label>
+                <JCUXUploadImage
+                  setImage={setImage1}
+                  image={image1}
+                  setImageError={setImage1Error}
+                />
+              </Form.Input>
+              <Form.Input style={{ display: "flex", flexDirection: "column" }}>
+                <label style={{ marginBottom: "5px", marginTop: "10px" }}>
                   Image 2
-                </p>
+                </label>
                 <JCUXUploadImage setImage={setImage2} image={image2} />
-                <p style={{ marginBottom: "5px", marginTop: "10px" }}>
+              </Form.Input>
+              <Form.Input style={{ display: "flex", flexDirection: "column" }}>
+                <label style={{ marginBottom: "5px", marginTop: "10px" }}>
                   Image 3
-                </p>
+                </label>
                 <JCUXUploadImage setImage={setImage3} image={image3} />
-              </div>
-            </Form.Input>
+              </Form.Input>
+            </div>
           </Form>
         </Modal.Description>
       </Modal.Content>

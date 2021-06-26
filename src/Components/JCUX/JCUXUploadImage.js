@@ -12,7 +12,7 @@ const FileDisplayArea = styled("div")`
   width: 100px;
   margin-top: 15px;
 `;
-export const JCUXUploadImage = ({ setImage, image }) => {
+export const JCUXUploadImage = ({ setImage, image, setImageError }) => {
   return (
     <>
       <input
@@ -27,6 +27,9 @@ export const JCUXUploadImage = ({ setImage, image }) => {
             var reader = new FileReader();
             reader.onload = function (e) {
               setImage({ url: reader.result });
+              if (setImageError) {
+                setImageError(false);
+              }
             };
 
             reader.readAsDataURL(file);
