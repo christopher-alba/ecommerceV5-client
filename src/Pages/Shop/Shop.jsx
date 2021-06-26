@@ -1,4 +1,4 @@
-import { useQuery } from "@apollo/client";
+import { useMutation, useQuery } from "@apollo/client";
 import React, { useEffect, useState } from "react";
 import { AUTHENTICATE, GET_PRODUCTS } from "../../ApolloClient/queries";
 import ProductBox from "../../Components/ProductBox";
@@ -21,6 +21,11 @@ import Searchbar from "../../Components/Searchbar";
 import { updateFilters, updateSearchString } from "../../Redux/actions/shop";
 import AdminProductBox from "../../Components/AdminProductBox/AdminProductBox";
 import { connect } from "react-redux";
+import {
+  CREATE_PRODUCT,
+  DELETE_PRODUCT,
+  UPDATE_PRODUCT,
+} from "../../ApolloClient/mutations";
 
 const basicOptions = [
   { key: "none", value: "none", text: "none" },
@@ -53,6 +58,9 @@ const Shop = ({
 }) => {
   const { loading, error, data } = useQuery(GET_PRODUCTS);
   const { data: authData, loading: authLoading } = useQuery(AUTHENTICATE);
+  const [createProduct] = useMutation(CREATE_PRODUCT);
+  const [updateProduct] = useMutation(UPDATE_PRODUCT);
+  const [deleteProduct] = useMutation(DELETE_PRODUCT);
   const [basicFilter, setBasicFilter] = useState(basicFilterFinal);
   const [typeFilter, setTypeFilter] = useState(typeFilterFinal);
   const [orientationFilter, setOrientationFilter] = useState(
@@ -180,6 +188,18 @@ const Shop = ({
   const searchToRedux = () => {
     updateSearchString(searchStringLocal);
   };
+  const handleDeleteProduct = () => {
+    deleteProduct({
+      variables: {
+        id: selectedProduct,
+      },
+      refetchQueries: [
+        {
+          query: GET_PRODUCTS,
+        },
+      ],
+    });
+  };
   return (
     <JCUXContainer>
       <JCUXTitle>WELCOME TO THE SHOP {isAdmin && "(ADMIN)"}</JCUXTitle>
@@ -219,7 +239,7 @@ const Shop = ({
                 <AdminControlButton fluid nowrap>
                   Update Product
                 </AdminControlButton>
-                <AdminControlButton fluid nowrap>
+                <AdminControlButton fluid nowrap onClick={handleDeleteProduct}>
                   Delete Product
                 </AdminControlButton>
               </>
