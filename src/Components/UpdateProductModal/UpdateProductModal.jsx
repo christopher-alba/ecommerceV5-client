@@ -286,7 +286,7 @@ const UpdateProductModal = ({ productId }) => {
   if (loading) {
     return (
       <div style={{ position: "relative", height: "400px" }}>
-        <Loader active={loading}>Fetching Top Picks</Loader>
+        <Loader active={loading}>Fetching Product</Loader>
       </div>
     );
   }

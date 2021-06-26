@@ -45,7 +45,7 @@ const ProductBody = ({ handleAddToCart, type }) => {
   if (loading) {
     return (
       <div style={{ position: "relative", height: "400px" }}>
-        <Loader active={loading}>Fetching Products</Loader>
+        <Loader active={loading}>Fetching Product</Loader>
       </div>
     );
   }

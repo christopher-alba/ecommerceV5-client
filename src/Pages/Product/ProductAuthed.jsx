@@ -13,8 +13,8 @@ const ProductAuthed = ({ authData }) => {
   const [updateCart] = useMutation(UPDATE_CART);
   if (loading) {
     return (
-      <div style={{ position: "relative", height: "400px" }}>
-        <Loader active={loading}>Fetching Top Picks</Loader>
+      <div style={{ position: "relative" }}>
+        <Loader active={loading}>Fetching Shopping Cart</Loader>
       </div>
     );
   }

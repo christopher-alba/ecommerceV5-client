@@ -9,7 +9,7 @@ const AuthWrapper = () => {
   if (loading) {
     return (
       <div style={{ position: "relative", height: "400px" }}>
-        <Loader active={loading}>Fetching Top Picks</Loader>
+        <Loader active={loading}>Authenticating</Loader>
       </div>
     );
   }

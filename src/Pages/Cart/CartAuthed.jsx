@@ -16,7 +16,7 @@ const CartAuthed = ({ authData }) => {
   if (loading) {
     return (
       <div style={{ position: "relative", height: "400px" }}>
-        <Loader active={loading}>Fetching Top Picks</Loader>
+        <Loader active={loading}>Fetching Cart</Loader>
       </div>
     );
   }
