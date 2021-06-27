@@ -15,7 +15,16 @@ const Favourites = ({ productIds }) => {
   if (error) {
     return <div>{error.message}</div>;
   }
-  return <div>{JSON.stringify(data)}</div>;
+
+  const specificProducts = data.specificProducts;
+
+  return (
+    <div>
+      {specificProducts.map((product) => {
+        return <h1>{product.name}</h1>;
+      })}
+    </div>
+  );
 };
 
 export default Favourites;
