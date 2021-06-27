@@ -59,6 +59,7 @@ const ProductBody = ({
     return <div>{error.message}</div>;
   }
   const product = data.product;
+  const favourited = favouritesIds && favouritesIds.includes(id);
   const sizesOptions = [];
   let outOfStock = false;
   product.sizes.forEach((sizeObject) => {
@@ -87,8 +88,8 @@ const ProductBody = ({
         <JCUXTitle>{product.name}</JCUXTitle>
         <Button
           color="red"
-          content="Like"
-          icon="heart"
+          content={favourited ? "Unfavourite" : "Favourite"}
+          icon={favourited ? "cancel" : "heart"}
           label={{
             basic: true,
             color: "red",
