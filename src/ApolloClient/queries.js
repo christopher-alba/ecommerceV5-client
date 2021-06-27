@@ -89,7 +89,9 @@ export const GET_PROFILE = gql`
       userId
       firstName
       lastName
-      favouriteProducts
+      favouriteProducts {
+        productId
+      }
       profilePicture
     }
   }
