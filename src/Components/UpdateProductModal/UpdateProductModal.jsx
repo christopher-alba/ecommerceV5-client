@@ -118,16 +118,9 @@ const UpdateProductModal = ({ productId }) => {
     },
   });
   const product = data && data.product;
-  const productImages =
-    data &&
-    data.product.images.map((imageObj) => {
-      return {
-        url: imageObj.url,
-      };
-    });
+  const productImages = data && data.product.images;
   const [updateProduct] = useMutation(UPDATE_PRODUCT);
 
-  useEffect(() => {}, [productId]);
   const [open, setOpen] = useState(false);
 
   const [name, setName] = useState(product && product.name);
@@ -165,6 +158,18 @@ const UpdateProductModal = ({ productId }) => {
     product && productImages && productImages[2]
   );
 
+  useEffect(() => {
+    setName(product && product.name);
+    setPrice(product && product.price);
+    setDescription(product && product.description);
+    setType(product && product.clothingType);
+    setOrientation(product && product.orientation);
+    setSizes(product && product.sizes);
+    setImage1(product && productImages && productImages[0]);
+    setImage2(product && productImages && productImages[1]);
+    setImage3(product && productImages && productImages[2]);
+  }, [productId, product, productImages]);
+
   const getImageArray = (img1, img2, img3) => {
     let imagesArray = [];
     if (img1) {
@@ -180,7 +185,7 @@ const UpdateProductModal = ({ productId }) => {
   };
 
   const handleSubmit = () => {
-    console.log("submitting form");
+    console.log(data.product);
     if (
       name &&
       price &&
@@ -211,7 +216,6 @@ const UpdateProductModal = ({ productId }) => {
         ],
       });
       setOpen(false);
-      window.location.reload();
     } else {
       if (!name) {
         setNameError(true);
