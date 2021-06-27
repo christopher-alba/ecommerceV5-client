@@ -69,3 +69,11 @@ export const DELETE_PRODUCT = gql`
     deleteProduct(id: $id)
   }
 `;
+
+export const UPDATE_PROFILE = gql`
+  mutation UpdateProfile($profile: updateProfileInput!) {
+    updateProfile(profile: $profile) {
+      userId
+    }
+  }
+`;

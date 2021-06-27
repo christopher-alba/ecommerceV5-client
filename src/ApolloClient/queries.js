@@ -82,3 +82,36 @@ export const AUTHENTICATE = gql`
     }
   }
 `;
+
+export const GET_PROFILE = gql`
+  query GetProfile($userId: ID!) {
+    profile(userId: $userId) {
+      userId
+      firstName
+      lastName
+      favouriteProducts
+      profilePicture
+    }
+  }
+`;
+
+export const GET_SPECIFIC_PRODUCTS = gql`
+  query GetSpecificProducts($ids: [ID!]!) {
+    specificProducts(ids: $ids) {
+      id
+      name
+      price
+      description
+      views
+      images {
+        url
+      }
+      orientation
+      clothingType
+      sizes {
+        stock
+        size
+      }
+    }
+  }
+`;
