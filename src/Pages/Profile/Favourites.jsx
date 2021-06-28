@@ -59,7 +59,12 @@ const Favourites = ({ productIds, authData }) => {
   return (
     <div>
       {specificProducts.map((product) => {
-        return <><JCUXButton onClick={() => { handleUnfavourite(product.id) }}>Unfavourite</JCUXButton><h1>{product.name}</h1></>;
+        return (
+          <>
+            <JCUXButton onClick={() => { handleUnfavourite(product.id) }}>Unfavourite</JCUXButton>
+            <h1>{product.name}</h1>
+          </>
+        );
       })}
     </div>
   );
