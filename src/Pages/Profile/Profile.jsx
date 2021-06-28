@@ -46,7 +46,7 @@ const Profile = ({ authData }) => {
           ? `${firstName} ${lastName}`
           : "You dont have a name registered in our database."}
       </h1>
-      <Favourites productIds={favouriteProducts} />
+      <Favourites productIds={favouriteProducts} authData={authData} />
     </JCUXContainer>
   );
 };
