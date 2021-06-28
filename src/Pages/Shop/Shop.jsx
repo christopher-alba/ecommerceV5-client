@@ -1,6 +1,6 @@
 import { useMutation, useQuery } from "@apollo/client";
 import React, { useEffect, useState } from "react";
-import { AUTHENTICATE, GET_PRODUCTS } from "../../ApolloClient/queries";
+import { AUTHENTICATE, GET_PRODUCTS, GET_PROFILE } from "../../ApolloClient/queries";
 import ProductBox from "../../Components/ProductBox";
 import { Loader } from "semantic-ui-react";
 import { JCUXContainer } from "../../Components/JCUX/JCUXContainer";
@@ -196,6 +196,12 @@ const Shop = ({
         {
           query: GET_PRODUCTS,
         },
+        {
+          query: GET_PROFILE,
+          variables: {
+            userId: authData.me._id,
+          }
+        }
       ],
     });
   };

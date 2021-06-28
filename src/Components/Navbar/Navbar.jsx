@@ -47,8 +47,9 @@ const Navbar = ({ setSelectedTheme, themes, selectedTheme, totalCost }) => {
   let totalCostFinal = 0;
 
   if (cartData && authData) {
+    console.log(cartData);
     totalCostFinal =
-      cartData &&
+      cartData && cartData.cart &&
       cartData.cart.products.reduce((accumulator, currentItem) => {
         return accumulator + currentItem.price;
       }, 0);
@@ -146,7 +147,7 @@ const NavbarDesktop = ({
             </NavbarThemeBox>
             <Link to="/cart" style={{ marginRight: "20px" }}>
               <JCUXButton icon labelPosition="right">
-                NZ${totalCost.toFixed(2)} <Icon name="cart" />
+                NZ${totalCost && totalCost.toFixed(2)} <Icon name="cart" />
               </JCUXButton>
             </Link>
 
@@ -259,7 +260,7 @@ const NavbarMobileMenu = ({
       <div style={{ marginTop: "20px" }}>
         <Link to="/cart">
           <JCUXButton icon labelPosition="right">
-            NZ${totalCost.toFixed(2)} <Icon name="cart" />
+            NZ${totalCost && totalCost.toFixed(2)} <Icon name="cart" />
           </JCUXButton>
         </Link>
       </div>
