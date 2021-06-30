@@ -17,9 +17,9 @@ const TitleWrapperInner = styled("div")`
 const TitleHeader = styled("h1")`
   font-weight: 200;
 `;
-export const JCUXTitle = ({ children }) => {
+export const JCUXTitle = ({ children, marginTop, marginBottom }) => {
   return (
-    <TitleWrapperOuter>
+    <TitleWrapperOuter style={{ marginTop, marginBottom }}>
       <TitleWrapperInner>
         <TitleHeader>{children}</TitleHeader>
       </TitleWrapperInner>
