@@ -10,9 +10,16 @@ import { GET_PROFILE } from "../../ApolloClient/queries";
 
 const UpdateProfileModal = ({ profile }) => {
   const [open, setOpen] = useState(false);
+
   const [firstName, setFirstName] = useState(profile.firstName);
+  const [firstNameError, setFirstNameError] = useState(false);
+
   const [lastName, setLastName] = useState(profile.lastName);
+  const [lastNameError, setLastNameError] = useState(false);
+
   const [profilePicture, setProfilePicture] = useState(profile.profilePicture);
+  const [profilePictureError, setProfilePictureError] = useState(false);
+
   const [updateProfile] = useMutation(UPDATE_PROFILE);
 
   useEffect(() => {
@@ -23,9 +30,11 @@ const UpdateProfileModal = ({ profile }) => {
 
   const handleFirstNameChange = (evt) => {
     setFirstName(evt.target.value);
+    setFirstNameError(false);
   };
   const handleLastNameChange = (evt) => {
     setLastName(evt.target.value);
+    setLastNameError(false);
   };
   const handleCancel = () => {
     setOpen(false);
@@ -51,6 +60,16 @@ const UpdateProfileModal = ({ profile }) => {
         ],
       });
       setOpen(false);
+    } else {
+      if (!firstName) {
+        setFirstNameError(true);
+      }
+      if (!lastName) {
+        setLastNameError(true);
+      }
+      if (!profilePicture) {
+        setProfilePictureError(true);
+      }
     }
   };
   return (
@@ -77,7 +96,16 @@ const UpdateProfileModal = ({ profile }) => {
         <Modal.Description>
           <Header>Change Your Details Here</Header>
           <Form id="updateProfileForm" onSubmit={handleSubmit}>
-            <Form.Input style={{ display: "flex", flexDirection: "column" }}>
+            <Form.Input
+              style={{ display: "flex", flexDirection: "column" }}
+              error={
+                firstNameError
+                  ? {
+                      content: "You must enter your first name",
+                    }
+                  : false
+              }
+            >
               <label>First Name</label>
               <JCUXInput
                 placeholder="First Name"
@@ -87,7 +115,16 @@ const UpdateProfileModal = ({ profile }) => {
                 defaultValue={firstName}
               />
             </Form.Input>
-            <Form.Input style={{ display: "flex", flexDirection: "column" }}>
+            <Form.Input
+              style={{ display: "flex", flexDirection: "column" }}
+              error={
+                lastNameError
+                  ? {
+                      content: "You must enter your last name",
+                    }
+                  : false
+              }
+            >
               <label>Last Name</label>
               <JCUXInput
                 placeholder="Last Name"
@@ -97,12 +134,22 @@ const UpdateProfileModal = ({ profile }) => {
                 defaultValue={lastName}
               />
             </Form.Input>
-            <Form.Input style={{ display: "flex", flexDirection: "column" }}>
+            <Form.Input
+              style={{ display: "flex", flexDirection: "column" }}
+              error={
+                profilePictureError
+                  ? {
+                      content: "You must upload a profile picture",
+                    }
+                  : false
+              }
+            >
               <label>Profile Picture</label>
               <JCUXUploadImage
                 setImage={setProfilePicture}
                 image={profilePicture}
                 noPreview={true}
+                setImageError={setProfilePictureError}
               />
             </Form.Input>
           </Form>
