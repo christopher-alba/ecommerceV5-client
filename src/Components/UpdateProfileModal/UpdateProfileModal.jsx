@@ -77,7 +77,7 @@ const UpdateProfileModal = ({ profile }) => {
       onClose={() => setOpen(false)}
       onOpen={() => setOpen(true)}
       open={open}
-      trigger={<Button primary>Update Profile</Button>}
+      trigger={<JCUXButton>Update Profile</JCUXButton>}
     >
       <Modal.Header>Update Profile</Modal.Header>
       <Modal.Content image>
