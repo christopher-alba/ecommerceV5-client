@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { useEffect } from "react";
-import { Button, Header, Image, Modal, Form } from "semantic-ui-react";
+import { Header, Image, Modal, Form } from "semantic-ui-react";
 import { JCUXInput } from "../JCUX/JCUXInput";
 import { JCUXUploadImage } from "../JCUX/JCUXUploadImage";
 import { JCUXButton } from "../JCUX/JCUXButton";
