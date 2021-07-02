@@ -1,7 +1,7 @@
 import { useMutation, useQuery } from "@apollo/client";
 import React from "react";
 import { GET_PRODUCT } from "../../ApolloClient/queries";
-import { Loader } from "semantic-ui-react";
+import { Loader, Button } from "semantic-ui-react";
 import { JCUXContainer } from "../../Components/JCUX/JCUXContainer";
 import { JCUXTitle } from "../../Components/JCUX/JCUXTitle";
 import { Carousel, CarouselImage } from "../../Components/Carousel";
@@ -12,7 +12,12 @@ import { Link } from "react-router-dom";
 import { UPDATE_PRODUCT } from "../../ApolloClient/mutations";
 import { useEffect } from "react";
 
-const ProductBody = ({ handleAddToCart, type }) => {
+const ProductBody = ({
+  handleAddToCart,
+  type,
+  handleToggleFavourites,
+  favouritesIds,
+}) => {
   const [size, setSize] = useState(undefined);
   const id = window.location.pathname.split("/")[2];
   const { loading, error, data } = useQuery(GET_PRODUCT, {
@@ -54,6 +59,7 @@ const ProductBody = ({ handleAddToCart, type }) => {
     return <div>{error.message}</div>;
   }
   const product = data.product;
+  const favourited = favouritesIds && favouritesIds.includes(id);
   const sizesOptions = [];
   let outOfStock = false;
   product.sizes.forEach((sizeObject) => {
@@ -80,6 +86,20 @@ const ProductBody = ({ handleAddToCart, type }) => {
       </Carousel>
       <JCUXContainer style={{ textAlign: "center" }}>
         <JCUXTitle>{product.name}</JCUXTitle>
+        <Button
+          color="red"
+          content={favourited ? "Unfavourite" : "Favourite"}
+          icon={favourited ? "cancel" : "heart"}
+          label={{
+            basic: true,
+            color: "red",
+            pointing: "left",
+            content: "2,048",
+          }}
+          onClick={() => {
+            handleToggleFavourites(product.id);
+          }}
+        />
         <h2>{product.views} Views</h2>
         <p>{product.description}</p>
         <h2 style={{ fontWeight: "200" }}>

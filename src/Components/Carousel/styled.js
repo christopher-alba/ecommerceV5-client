@@ -69,6 +69,7 @@ export const CarouselOuterBox = styled("div")`
       }
     }};
   }
+  width: inherit;
 `;
 
 export const CarouselIndicator = styled("div")`

@@ -9,6 +9,7 @@ import Home from "./Pages/Home";
 import Shop from "./Pages/Shop";
 import Product from "./Pages/Product";
 import Cart from "./Pages/Cart";
+import ProfileAuthWrapper from "./Pages/Profile";
 import NotFound from "./Pages/NotFound";
 import AOS from "aos";
 import "aos/dist/aos.css"; // You can also use <link> for styles
@@ -61,6 +62,15 @@ const App = () => {
           component={() => (
             <div data-aos="fade-in">
               <Cart />
+            </div>
+          )}
+        />
+        <Route
+          exact
+          path="/profile"
+          component={() => (
+            <div data-aos="fade-in">
+              <ProfileAuthWrapper />
             </div>
           )}
         />

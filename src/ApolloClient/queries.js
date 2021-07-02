@@ -89,8 +89,12 @@ export const GET_PROFILE = gql`
       userId
       firstName
       lastName
-      favouriteProducts
-      profilePicture
+      favouriteProducts {
+        productId
+      }
+      profilePicture {
+        url
+      }
     }
   }
 `;

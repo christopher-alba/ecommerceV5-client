@@ -37,4 +37,9 @@ export const JCUXLinkButton = styled(Link)`
   white-space: nowrap;
   text-align: center;
   padding: 5px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding-left: 15px;
+  padding-right: 15px;
 `;
