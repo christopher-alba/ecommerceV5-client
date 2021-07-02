@@ -92,7 +92,9 @@ export const GET_PROFILE = gql`
       favouriteProducts {
         productId
       }
-      profilePicture
+      profilePicture {
+        url
+      }
     }
   }
 `;

@@ -11,6 +11,8 @@ import { Loader } from "semantic-ui-react";
 import { JCUXContainer } from "../../Components/JCUX/JCUXContainer";
 import { JCUXTitle } from "../../Components/JCUX/JCUXTitle";
 import Favourites from "./Favourites";
+import UpdateProfileModal from "../../Components/UpdateProfileModal";
+
 const Profile = ({ authData }) => {
   const { data, loading, error } = useQuery(GET_PROFILE, {
     variables: {
@@ -30,13 +32,12 @@ const Profile = ({ authData }) => {
   }
   const { firstName, lastName, favouriteProducts, profilePicture } =
     data.profile;
-  console.log(favouriteProducts);
   return (
-    <JCUXContainer>
+    <JCUXContainer style={{ paddingBottom: "100px" }}>
       <FlexCentered>
         <ProfilePicture
           className="profilePicture"
-          src={profilePicture || "doesnotexist.jpg"}
+          src={(profilePicture && profilePicture.url) || "doesnotexist.jpg"}
           alt="Profile"
           onError={(e) => {
             e.target.onerror = null;
@@ -53,6 +54,7 @@ const Profile = ({ authData }) => {
             ? `${firstName} ${lastName}`
             : "You dont have a name registered in our database."}
         </NameHeader>
+        <UpdateProfileModal profile={data.profile} />
       </FlexCentered>
 
       <Favourites productIds={favouriteProducts} authData={authData} />

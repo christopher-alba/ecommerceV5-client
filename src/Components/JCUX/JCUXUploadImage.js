@@ -12,7 +12,12 @@ const FileDisplayArea = styled("div")`
   width: 100px;
   margin-top: 15px;
 `;
-export const JCUXUploadImage = ({ setImage, image, setImageError }) => {
+export const JCUXUploadImage = ({
+  setImage,
+  image,
+  setImageError,
+  noPreview,
+}) => {
   return (
     <>
       <input
@@ -38,7 +43,7 @@ export const JCUXUploadImage = ({ setImage, image, setImageError }) => {
           }
         }}
       />
-      {image && (
+      {image && !noPreview && (
         <FileDisplayArea>
           <StyledImage src={image && image.url} />
         </FileDisplayArea>
