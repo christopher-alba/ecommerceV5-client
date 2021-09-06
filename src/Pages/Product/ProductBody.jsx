@@ -77,6 +77,44 @@ const ProductBody = ({
   const handleSizeChange = (evt, select) => {
     setSize(select.value);
   };
+  const handleFavouritesCount = (productId) => {
+    if (favourited) {
+      updateProduct({
+        variables: {
+          product: {
+            id: productId,
+            favourites: data && data.product.favourites - 1,
+          },
+        },
+        refetchQueries: [
+          {
+            query: GET_PRODUCT,
+            variables: {
+              id: productId,
+            },
+          },
+        ],
+      });
+    } else {
+      updateProduct({
+        variables: {
+          product: {
+            id: productId,
+            favourites: data && data.product.favourites + 1,
+          },
+        },
+        refetchQueries: [
+          {
+            query: GET_PRODUCT,
+            variables: {
+              id: productId,
+            },
+          },
+        ],
+      });
+    }
+  };
+  console.log(product);
   return (
     <div style={{ paddingBottom: "5%" }}>
       <Carousel>
@@ -86,22 +124,24 @@ const ProductBody = ({
       </Carousel>
       <JCUXContainer style={{ textAlign: "center" }}>
         <JCUXTitle>{product.name}</JCUXTitle>
-        {handleToggleFavourites && (
-          <Button
-            color="red"
-            content={favourited ? "Unfavourite" : "Favourite"}
-            icon={favourited ? "cancel" : "heart"}
-            label={{
-              basic: true,
-              color: "red",
-              pointing: "left",
-              content: "2,048",
-            }}
-            onClick={() => {
-              handleToggleFavourites(product.id);
-            }}
-          />
-        )}
+
+        <Button
+          disabled={handleToggleFavourites ? false : true}
+          color="red"
+          content={favourited ? "Unfavourite" : "Favourite"}
+          icon={favourited ? "cancel" : "heart"}
+          label={{
+            basic: true,
+            color: "red",
+            pointing: "left",
+            content: product.favourites,
+          }}
+          onClick={() => {
+            handleFavouritesCount(product.id);
+            handleToggleFavourites(product.id);
+          }}
+        />
+
         <h2>{product.views} Views</h2>
         <p>{product.description}</p>
         <h2 style={{ fontWeight: "200" }}>

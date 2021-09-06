@@ -2,7 +2,10 @@ import { useMutation, useQuery } from "@apollo/client";
 import React from "react";
 import { GET_CART, GET_PRODUCT, GET_PROFILE } from "../../ApolloClient/queries";
 import ProductBody from "./ProductBody";
-import { UPDATE_CART, UPDATE_PROFILE } from "../../ApolloClient/mutations";
+import {
+  UPDATE_CART,
+  UPDATE_PROFILE,
+} from "../../ApolloClient/mutations";
 import { Loader } from "semantic-ui-react";
 const ProductAuthed = ({ authData }) => {
   const { data, loading, error } = useQuery(GET_CART, {
