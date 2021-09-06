@@ -86,20 +86,22 @@ const ProductBody = ({
       </Carousel>
       <JCUXContainer style={{ textAlign: "center" }}>
         <JCUXTitle>{product.name}</JCUXTitle>
-        <Button
-          color="red"
-          content={favourited ? "Unfavourite" : "Favourite"}
-          icon={favourited ? "cancel" : "heart"}
-          label={{
-            basic: true,
-            color: "red",
-            pointing: "left",
-            content: "2,048",
-          }}
-          onClick={() => {
-            handleToggleFavourites(product.id);
-          }}
-        />
+        {handleToggleFavourites && (
+          <Button
+            color="red"
+            content={favourited ? "Unfavourite" : "Favourite"}
+            icon={favourited ? "cancel" : "heart"}
+            label={{
+              basic: true,
+              color: "red",
+              pointing: "left",
+              content: "2,048",
+            }}
+            onClick={() => {
+              handleToggleFavourites(product.id);
+            }}
+          />
+        )}
         <h2>{product.views} Views</h2>
         <p>{product.description}</p>
         <h2 style={{ fontWeight: "200" }}>

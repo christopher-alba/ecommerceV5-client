@@ -268,7 +268,7 @@ const Shop = ({
             : "No products were found."}
         </PageNumber>
         <JCUXButton
-          disabled={upperCount > filteredProducts.length}
+          disabled={upperCount >= filteredProducts.length}
           onClick={handleNextClick}
         >
           Next Page
@@ -297,7 +297,7 @@ const Shop = ({
             : "No products were found."}
         </PageNumber>
         <JCUXButton
-          disabled={upperCount > filteredProducts.length}
+          disabled={upperCount >= filteredProducts.length}
           onClick={handleNextClick}
         >
           Next Page
