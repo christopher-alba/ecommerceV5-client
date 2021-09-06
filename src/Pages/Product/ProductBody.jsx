@@ -157,7 +157,7 @@ const ProductBody = ({
               options={sizesOptions}
               onChange={handleSizeChange}
             />
-            <Link to="/cart">
+            <Link to="/cart" style={{ pointerEvents: !size ? "none" : "auto" }}>
               <AddToCart
                 disabled={!size}
                 icon
